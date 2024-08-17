@@ -53,7 +53,11 @@
                     <h2>Request Our E-books</h2>
                     <p>Fill out the form below to request our e-books. Once you submit the form, you will receive an email with the e-book. If you have any questions or need further assistance, please feel free to <a href="articles/contact.html">contact us</a>.</p>
                     
-                    <form id="ebook-request-form" action="https://formspree.io/f/xqazljdg" method="POST">
+                    <form action="https://api.web3forms.com/submit" method="POST">
+
+                        <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
+                    
+
 
                         <label for="name" style="display: inline-block; vertical-align: top;">Name</label><span style="color: red !important; display: inline; float: none;"> *</span><br>
                         <input type="text" id="name" name="name" placeholder="Enter Your Name"><br>
