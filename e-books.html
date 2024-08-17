@@ -329,33 +329,7 @@
                 </section>
             </div>
         </div>
-
-        <!-- Form submission Script -->
-        <script>
-            document.getElementById('ebook-request-form').addEventListener('submit', function(event) {
-              event.preventDefault();
-        
-              fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-              })
-              .then(response => {
-                if (response.ok) {
-                  document.getElementById('ebook-request-form').style.display = 'none';
-                  document.getElementById('success-message').style.display = 'block';
-                } else {
-                  alert('There was an error. Please try again.');
-                }
-              })
-              .catch(error => {
-                alert('There was an error. Please try again.');
-              });
-            });
-          </script>
-
-    
-    <!-- Sidebar -->
+        <!-- Sidebar -->
                 <div id="sidebar">
                     <div class="inner">
         
@@ -447,5 +421,28 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+     <!-- Form submission Script -->
+     <script>
+        document.getElementById('ebook-request-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+    
+          fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: { 'Accept': 'application/json' }
+          })
+          .then(response => {
+            if (response.ok) {
+              document.getElementById('ebook-request-form').style.display = 'none';
+              document.getElementById('success-message').style.display = 'block';
+            } else {
+              alert('There was an error. Please try again.');
+            }
+          })
+          .catch(error => {
+            alert('There was an error. Please try again.');
+          });
+        });
+      </script>
 </body>
 </html>
