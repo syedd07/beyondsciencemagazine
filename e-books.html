@@ -9,6 +9,15 @@
     <meta name="description" content="BEYOND SC!ENCE Magazine is a platform that features researchers and science communicators from all around the world, bringing out the stories of the people behind the science. We believe researchers are the real truth seekers. Explore our in-depth articles, expert interviews, and the latest breakthroughs across various fields, from biotechnology to space exploration." />
     <meta name="keywords" content="Beyond Science Magazine, Science, Research, Breakthroughs, Innovations, Curiosity, Determination, Brighter Future, Amazon" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <!-- Fav icons-->
     <link rel="apple-touch-icon" sizes="180x180" href="articles/images/favicon_io/apple-touch-icon.png">
@@ -311,6 +320,7 @@
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
             </select>
+            
             <br>
             <label for="ebook" style="display: inline-block; vertical-align: top;">E-book</label><span style="color: red !important; display: inline; float: none;"> *</span><br> 
             <select name="ebook" id="ebook">
@@ -325,15 +335,17 @@
             <br>
             <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
             <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label><br>
-            <br>
-            <button type="submit">Request E-book</button>
-        </form>
-        <div id="success-message" style="display:none;">
-                        Thank you! Your e-book will be sent to your email shortly.
-                    </div>
-                </section>
+            <br><button type="submit">Request E-book</button>
+            <br></br>
+            <div class="box">
+            <p><strong>Disclaimer:</strong> By submitting this form, you agree to receive emails from BEYOND SC!ENCE Magazine. You can unsubscribe at any time. We respect your privacy and will not share your information with third parties.</p>
             </div>
-        </div>
+        </form>
+        <h4>Or order a paper back edition!</h4>
+        <button type="button" onclick="window.location.href='books.html'">Go to Book</button>
+    </section>
+</div>
+</div>
         <!-- Sidebar -->
                 <div id="sidebar">
                     <div class="inner">
@@ -450,5 +462,14 @@
           });
         });
       </script>
+       <script>
+        $(document).ready(function() {
+            $('#country').select2({
+                placeholder: "Select your country",
+                allowClear: true
+            });
+        });
+        </script>
+            
 </body>
 </html>
