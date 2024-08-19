@@ -2267,3 +2267,97 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+
+/* Popup Styles */
+.popup {
+  display: block; /* Show popup by default for this example */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark background */
+  z-index: 1000; /* Make sure it's on top */
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-close {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.popup-close:hover {
+  color: #d9534f; /* Color on hover */
+}
+
+.promotion-message {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.reconsider-message {
+  display: none; /* Hidden by default */
+  text-align: center;
+  margin-top: 20px;
+  background-color: #fff3cd;
+  padding: 15px;
+  border: 1px solid #ffeeba;
+  border-radius: 5px;
+  color: #856404;
+}
+
+.btn-promotion, .btn-reconsider {
+  display: inline-block;
+  background-color: #d9534f; /* Button background color */
+  color: #fff; /* Text color */
+  padding: 12px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-promotion:hover, .btn-reconsider:hover {
+  background-color: #c9302c; /* Darker shade for hover effect */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.btn-promotion:active, .btn-reconsider:active {
+  background-color: #ac2925; /* Even darker shade for click effect */
+  transform: scale(0.95); /* Slight zoom-out effect on click */
+}
+
+/* Close Button Styles */
+.popup-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #d9534f; /* Color for the close button */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.popup-close:hover {
+  color: #c9302c; /* Darker shade on hover */
+}

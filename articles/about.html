@@ -73,12 +73,14 @@
                 <div id="sidebar">
                     <div class="inner">
         
-                        <!-- Search -->
-                        <section id="search" class="alt">
-                            <form method="post" action="#">
-                                <input type="text" name="query" id="query" placeholder="Search" />
-                            </form>
-                        </section>
+                         <!-- Search -->
+                <section id="search" class="alt">
+                    <form id="searchForm" method="post" action="#">
+                        <input type="text" name="query" id="query" placeholder="Search" />
+                        <br>
+                        <button type="submit">Search</button>
+                    </form>
+                </section>
         
                         <!-- Menu -->
                         <nav id="menu">
@@ -157,12 +159,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Pop-Up -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="popup-close" id="popupClose">&times;</span>
+        <h2>Hello!</h2>
+        <div id="promotion-message" class="promotion-message">
+            <p>
+                🎉 <strong>Exciting News!</strong> 🎉 <br>
+                We're thrilled to announce that, in celebration of our e-books launch, we're offering them <strong>for FREE</strong> for a limited time only! ⏳ <br>
+                Don't miss out on this incredible opportunity to get your hands on the <strong>BEYOND SC!ENCE</strong> e-book at no cost. <br>
+                <span class="highlight">HURRY UP!</span> The offer won't last forever!
+                <br><br>
+                <a href="e-books.html" class="btn-promotion">Grab Your Free E-Book</a>
+            </p>
+        </div>
+        <div id="reconsider-message" class="reconsider-message">
+            <p>It looks like you might be missing out on our fantastic e-book offer! We highly recommend you take a moment to check it out before the free offer ends. <br>
+            <br>
+            <a href="e-books.html" class="btn-reconsider">View E-Books</a></p>
+        </div>
+    </div>
+</div>
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/search.js"></script>
  
 </body>
 

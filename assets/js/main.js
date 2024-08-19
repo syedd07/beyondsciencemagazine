@@ -1,3 +1,36 @@
+document.addEventListener('DOMContentLoaded', function () {
+	// Show the pop-up after 4 seconds
+	setTimeout(function() {
+		document.getElementById('popup').style.display = 'block';
+	}, 4000); // Show after 4 seconds
+
+	// Hide the pop-up and show the reconsider message when clicking the close button
+	document.getElementById('popupClose').addEventListener('click', function() {
+		hidePopupAndShowReconsider();
+	});
+
+	// Hide the pop-up and show the reconsider message when clicking outside of the pop-up content
+	window.addEventListener('click', function(event) {
+		if (event.target === document.getElementById('popup')) {
+			hidePopupAndShowReconsider();
+		}
+	});
+
+	// Function to hide the popup and show the reconsider message
+	function hidePopupAndShowReconsider() {
+		var popup = document.getElementById('popup');
+		var promotionMessage = document.getElementById('promotion-message');
+		var reconsiderMessage = document.getElementById('reconsider-message');
+
+		// Hide the popup
+		popup.style.display = 'none';
+
+		// Show the reconsider message
+		promotionMessage.style.display = 'none';
+		reconsiderMessage.style.display = 'block';
+	}
+});
+
 
 (function($) {
 
@@ -253,5 +286,8 @@
 				});
 
 			});
+	
+			
+})
 
-})(jQuery);
+(jQuery);
