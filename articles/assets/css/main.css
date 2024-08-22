@@ -2360,3 +2360,12 @@ button,
 .popup-close:hover {
   color: #c9302c; /* Darker shade on hover */
 }
+
+/* Newslaetter Form button */
+
+.bottom-right {
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it's on top of other elements */
+}

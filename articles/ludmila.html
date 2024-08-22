@@ -205,6 +205,35 @@
     </div>
 </div>
 
+<div class="bottom-right">
+    <!--Zoho Campaigns Embed Button Starts-->
+    <script type="text/javascript" src="https://zc1.maillist-manage.in/js/jquery-1.11.0.min.js"></script>
+    <script type='text/javascript' src='https://zc1.maillist-manage.in/js/jquery-migrate-1.2.1.min.js'></script>
+    <script type='text/javascript' src='https://zc1.maillist-manage.in/js/jquery-ui-1.10.4.custom.min.js'></script>
+    <div id="zc_popoverlay" style="display:none;background: radial-gradient(50% 50%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);height: 100%;left: 0px;overflow-x: hidden;overflow-y: auto;position: fixed;top: 0px;width: 100%;z-index: 2;">
+        <div style="height: 100%;display:table;margin: 0px auto;position: static;">
+            <div style="display: table-cell;vertical-align: middle;">
+                <div style="position:relative;background-color: #fff;box-shadow: 1px 2px 5px #555;border-radius: 3px;padding: 10px;margin: 15px 0px;" id="signUpFormInline"> </div>
+            </div>
+        </div>
+    </div>
+    <div id='embedLink'>
+        <button type="button" purpose="nrmlBtn" class="" style="outline: none 0px; background-color: rgb(255, 255, 255); color: rgb(255, 255, 255); border-width: 1px; border-image: initial; padding: 1px 10px; border-radius: 10px; text-align: center; width: auto; cursor: pointer; font-size: 10px; font-family: 'Times New Roman', Times, serif; border-style: solid;"
+        changetype="EMBED_BUTTON" id="EMBED_BUTTON" name="EMBED_BUTTON" value="Join Our Newsletter" formopenin="Popup" btntype="nrmlBtn" onclick="zc_loadForm('campaigns.zoho.in','https://zc1.maillist-manage.in/ua/Optin?od=1a1e3db95cf1f&amp;zx=1dfa221161&amp;lD=12cbaa6e84d8c108&amp;n=11699f74d0dcd00&amp;sD=12cbaa6e84d8c116')"
+        bgcolor="#ffffff"> <span class="zceditcnt">Join Our Newsletter</span> </button>
+    </div>
+    <input type='hidden' id='zc_Url' value='zc1.maillist-manage.in' />
+    <input type='hidden' id='zc_formIx' name='zc_formIx' value='3zf040de4ecf0ee8d21381016ec0afdf2bc8fa9810c85c14ba0637a053767d9435'>
+    <input type='hidden' id='cmpZuid' name='zx' value='undefined'>
+    <input type='hidden' id='viewFrom' name='viewFrom' value='BUTTON_ACTION' />
+    <input type='hidden' id='button_tc_codeVal' name='button_tc_codeVal' value='ZCFORMVIEW' />
+    <script type='text/javascript' src='https://zc1.maillist-manage.in/js/optin_min.js'></script>
+    <script>
+        var trackingText='ZCFORMVIEW'; var $ZC = jQuery.noConflict(); $ZC('[id=embedLink]').append("<input type='hidden' id='tc_code"+$ZC('[id=embedLink]').size()+"' value="+trackingText+">"); var elemSize = parseInt($ZC('[id=embedLink]').size())-1; var embedLink = $ZC($ZC('[id=embedLink]')[elemSize]).attr('href'); if(embedLink!=undefined && embedLink!=null && embedLink!='null'){ var dynamicCodeVal = $ZC("#tc_code"+$ZC('[id=embedLink]').size()).val(); embedLink = embedLink+'&trackingcode='+dynamicCodeVal; $ZC($ZC('[id=embedLink]')[elemSize]).attr('href',embedLink); $ZC('[id=button_tc_codeVal]').val(dynamicCodeVal); trackSignupEvent(dynamicCodeVal,'buttonView'); }
+    </script>
+    <!-- Zoho Campaigns Embed Button End -->
+    
+    </div>
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
