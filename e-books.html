@@ -60,11 +60,14 @@
 
 <meta content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <div id="sf3z5cc3eb00bca18516c9fb87fded35d20252d1ad361f1a4920a0c4736c2a536e1e" data-type="signupform">
-	<input type="hidden" id="recapTheme" value="2">
-	<input type="hidden" id="isRecapIntegDone" value="false">
-	<input type="hidden" id="signupFormType" value="LargeForm_Vertical">
 	<div id="customForm">
-		<div name="SIGNUP_PAGE" class="large_form_3_css" id="SIGNUP_PAGE">
+		<input type="hidden" id="recapTheme" value="2">
+		<input type="hidden" id="isRecapIntegDone" value="false">
+		
+		<input type="hidden" id="signupFormMode" value="copyCode">
+		<input type="hidden" id="signupFormType" value="LargeForm_Vertical">
+		<input type="hidden" id="recapModeTheme" value=""><input type="hidden" id="signupFormMode" value="copyCode">
+		<div name="SIGNUP_PAGE" class="large_form_1_css" id="SIGNUP_PAGE">
 			<div name="" changeid="" changename="">
 				<div id="imgBlock" name="LOGO_DIV" logo="true"></div>
 			</div>
@@ -89,20 +92,28 @@
 					</div>
 					<form method="POST" id="zcampaignOptinForm" action="https://zc1.maillist-manage.in/weboptin.zc" target="_zcSignup">
 						<div id="SIGNUP_BODY_ALL" name="SIGNUP_BODY_ALL">
-							<h1 id="SIGNUP_HEADING" name="SIGNUP_HEADING" changeid="SIGNUP_MSG" changetype="SIGNUP_HEADER">
-								<span>Request Our E-books</span>
-							</h1>
+							<h1 id="SIGNUP_HEADING" name="SIGNUP_HEADING" changeid="SIGNUP_MSG" changetype="SIGNUP_HEADER">Request Our e-book</h1>
 							<div id="SIGNUP_BODY" name="SIGNUP_BODY">
 								<div>
 									<div class="" changeid="SIGNUP_MSG" id="SIGNUP_DESCRIPTION" changetype="SIGNUP_DESCRIPTION"></div>
-									
+									<div id="errorMsgDiv">&nbsp;&nbsp;Please correct the marked field(s) below.</div>
 									<div>
 										<div name="fieldsdivSf" class="zcsffieldsdiv">
-											<div class="zcsffield " fieldid="201442000000000023">
-												<div><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
-													<input maxlength="100" placeholder="Enter Your Email" name="CONTACT_EMAIL" changeitem="SIGNUP_FORM_FIELD" type="email">&nbsp;
-													<span name="SIGNUP_REQUIRED">*</span>
-													<span style="display:none" id="dt_CONTACT_EMAIL">1,true,6,Contact Email,2</span>
+											<div>
+												<div>
+													<div name="SIGNUP_FORM_LABEL">Enter Your Email&nbsp;
+														
+														
+														
+														<span name="SIGNUP_REQUIRED">*</span>
+													
+													
+													
+													</div>
+													<div class="zcinputbox"><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
+														<input name="CONTACT_EMAIL" changeitem="SIGNUP_FORM_FIELD" maxlength="100" type="email">
+														<span style="display:none" id="dt_CONTACT_EMAIL">1,true,6,Contact Email,2</span>
+													</div>
 												</div>
 												
 												
@@ -117,34 +128,43 @@
 											
 											
 											</div>
-											<div class="zcsffield " fieldid="201442000000000029">
-												<div><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
-													<input maxlength="100" placeholder="First Name" name="FIRSTNAME" changeitem="SIGNUP_FORM_FIELD" type="text">&nbsp;
-													<span style="display:none" id="dt_FIRSTNAME">1,false,1,First Name,2</span>
-												</div><div></div></div>
-											<div class="zcsffield " fieldid="201442000000000062">
-												<div><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
-													<input maxlength="100" placeholder="Country" name="COUNTRY" changeitem="SIGNUP_FORM_FIELD" type="text">&nbsp;
-													<span style="display:none" id="dt_COUNTRY">1,false,1,Country,2</span>
-												</div><div></div></div>
-											<div class="zcsffield " fieldid="201442000000081282">
+											<div>
 												<div>
-													<div>
-														<select name="CONTACT_CF4" changeitem="SIGNUP_FORM_FIELD" zc_display_name="select an e-book">
-															<option value="" selected disabled="">select an e-book</option>
-															<option value="NOVEMBER EDITION">NOVEMBER EDITION</option>
-															<option value="JANUARY EDITION">JANUARY EDITION</option>
-														</select>&nbsp;
-														<span style="display:none" id="dt_CONTACT_CF4">1,false,3,select an e-book,2</span>
+													<div name="SIGNUP_FORM_LABEL">First Name&nbsp;<span name="SIGNUP_REQUIRED">*</span></div>
+													<div class="zcinputbox"><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
+														<input name="FIRSTNAME" changeitem="SIGNUP_FORM_FIELD" maxlength="100" type="text">
+														<span style="display:none" id="dt_FIRSTNAME">1,true,1,First Name,2</span>
 													</div>
 												</div><div></div></div>
-											<div class="zcsffield " fieldid="201442000000081292">
-												<div><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
-													<input maxlength="200" placeholder="Reason" name="CONTACT_CF5" changeitem="SIGNUP_FORM_FIELD" type="text">&nbsp;
-													<span style="display:none" id="dt_CONTACT_CF5">1,false,1,Reason,2</span>
+											<div>
+												<div>
+													<div name="SIGNUP_FORM_LABEL">Country&nbsp;<span name="SIGNUP_REQUIRED">*</span></div>
+													<div class="zcinputbox"><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
+														<input name="COUNTRY" changeitem="SIGNUP_FORM_FIELD" maxlength="100" type="text">
+														<span style="display:none" id="dt_COUNTRY">1,true,1,Country,2</span>
+													</div>
 												</div><div></div></div>
-										</div><!-- Captcha for Signup -->
-										<div style="padding: 10px 0px 10px 10px;display:none " id="captchaOld" name="captchaContainer">
+											<div>
+												<div>
+													<div name="SIGNUP_FORM_LABEL">select an e-book&nbsp;<span name="SIGNUP_REQUIRED">*</span></div>
+													<div class="zcinputbox">
+														<select name="CONTACT_CF4" zc_display_name="select an e-book" changeitem="SIGNUP_FORM_FIELD">
+															<option value="NOVEMBER EDITION">NOVEMBER EDITION</option>
+															<option value="JANUARY EDITION">JANUARY EDITION</option>
+														</select>
+														<span style="display:none" id="dt_CONTACT_CF4">1,true,3,select an e-book,2</span>
+													</div>
+												</div><div></div></div>
+											<div>
+												<div>
+													<div name="SIGNUP_FORM_LABEL">Reason&nbsp;</div>
+													<div class="zcinputbox"><!-- check to mark emailid field as type email, and other mandatory fields as type required -->
+														<input name="CONTACT_CF5" changeitem="SIGNUP_FORM_FIELD" maxlength="200" type="text">
+														<span style="display:none" id="dt_CONTACT_CF5">1,false,1,Reason,2</span>
+													</div>
+												</div><div></div></div>
+										</div>
+										<div style="padding: 10px 0px 10px 15px;display:none " id="captchaOld" class="recaptcha" name="captchaContainer">
 											<div>
 												<div id="captchaParent">
 													<img src="//campaigns.zoho.in/images/refresh_icon.png" onclick="loadCaptcha('https://campaigns.zoho.in/campaigns/CaptchaVerify.zc?mode=generate',this,'#sf3z5cc3eb00bca18516c9fb87fded35d20252d1ad361f1a4920a0c4736c2a536e1e');" id="relCaptcha">
@@ -153,19 +173,15 @@
 													<span name="SIGNUP_REQUIRED" id="capRequired">*</span>
 												</div>
 											</div><div></div></div>
-										<input type="hidden" id="secretid" value="6LdNeDUUAAAAAG5l7cJfv1AA5OKLslkrOa_xXxLs"><!-- Captcha for Signup End--><!-- Other Lists Subscription Start--><div></div>
-										<div id="REQUIRED_FIELD_TEXT" changetype="REQUIRED_FIELD_TEXT" name="SIGNUP_REQUIRED" style="color: red;">* Required</div><br>
-										
-										<input type="checkbox" id="privacy-policy" name="privacy-policy" required>
-                        <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label>
-                        <br>
+										<input type="hidden" id="secretid" value="6LdNeDUUAAAAAG5l7cJfv1AA5OKLslkrOa_xXxLs"><!-- Captcha for Signup End--><!-- Other Lists Subscription Start--><!-- Other Lists Subscription End--><div></div>
+										<div id="REQUIRED_FIELD_TEXT" changetype="REQUIRED_FIELD_TEXT" name="SIGNUP_REQUIRED">*Required Fields</div>
 										<div>
-											<input type="button" action="Save" id="zcWebOptin" name="SIGNUP_SUBMIT_BUTTON" changetype="SIGNUP_SUBMIT_BUTTON_TEXT" value="Request e-book">
+											<input type="button" action="Save" id="zcWebOptin" name="SIGNUP_SUBMIT_BUTTON" changetype="SIGNUP_SUBMIT_BUTTON_TEXT" value="Request e-book!">
 										</div>
 									</div>
 								</div>
 							</div><!-- Do not edit the below Zoho Campaigns hidden tags -->
-							<input type="hidden" id="fieldBorder" value="">
+							<input type="hidden" id="fieldBorder" value="" onload="">
 							<input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW" onload="">
 							<input type="hidden" name="viewFrom" id="viewFrom" value="URL_ACTION">
 							<input type="hidden" id="submitType" name="submitType" value="optinCustomView">
@@ -191,7 +207,7 @@
 		</div>
 		<input type="hidden" id="isCaptchaNeeded" value="false">
 		<input type="hidden" id="superAdminCap" value="0">
-		<img src="https://zc1.maillist-manage.in/images/spacer.gif" onload="referenceSetter(this)" id="refImage" style="display:none;">
+		<img src="https://zc1.maillist-manage.in/images/spacer.gif" id="refImage" onload="referenceSetter(this)" style="display:none;">
 	</div>
 </div>
 <div id="zcOptinOverLay" oncontextmenu="return false" style="display:none;text-align: center; background-color: rgb(0, 0, 0); opacity: 0.5; z-index: 100; position: fixed; width: 100%; top: 0px; left: 0px; height: 988px;"></div>
