@@ -13,6 +13,7 @@
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 
     <!-- Include Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -70,6 +71,15 @@
 
                         <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
                         <input type="hidden" name="redirect" value="https://beyondsciencemagazine.studio/thanks.html">
+                        <div id="loader" style="display: none;">
+                            <img src="articles/images/loader.gif" alt="Loading...">
+                        </div>
+                        <script>
+                            // Show loader when form is submitted
+                            $('form').submit(function() {
+                                $('#loader').show();
+                            });
+                        </script>
 
                         <label for="name" style="display: inline-block; vertical-align: top;">Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
@@ -355,7 +365,7 @@
                     <div class="box">
                         <p><strong>Disclaimer:</strong> By submitting this form, you agree to receive emails from BEYOND SC!ENCE Magazine. You can unsubscribe at any time. We respect your privacy and will not share your information with third parties.</p>
                     </div>
-                    <h4>Or order a paper back edition!</h4>
+                    <h4>You may checkout our paper back edition!</h4>
                     <button type="button" onclick="window.location.href='books.html'">Go to Book</button>
                 </section>
 
