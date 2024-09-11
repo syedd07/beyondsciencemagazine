@@ -2370,4 +2370,14 @@ button,
   bottom: 20px; /* Adjust as needed */
   right: 20px; /* Adjust as needed */
   z-index: 1000; /* Ensure it's on top of other elements */
-} 
+}
+ .progress-bar {
+   background: linear-gradient(to right, #f56a6a var(--scroll), transparent 0);
+   background-repeat: no-repeat;
+   width: 100%;
+   position: fixed;
+   top: 0;
+   left: 0;
+   height: 4px;
+   z-index: 1;
+   }
