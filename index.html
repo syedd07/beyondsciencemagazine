@@ -9,7 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="description" content="BEYOND SC!ENCE Magazine is a platform that features researchers and science communicators from all around the world, bringing out the stories of the people behind the science. We believe researchers are the real truth seekers. Explore our in-depth articles, expert interviews, and the latest breakthroughs across various fields, from biotechnology to space exploration." />
     <meta name="keywords" content="Beyond Science Magazine, Science, Research, Breakthroughs, Innovations, Curiosity, Determination, Brighter Future, Amazon" />
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="assets/css/main.css" />
+
 
     <!-- Fav icons-->
     <link rel="apple-touch-icon" sizes="180x180" href="articles/images/favicon_io/apple-touch-icon.png">
@@ -329,6 +331,21 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/search.js"></script>
+
+ <!-- Prograssive Web App -->
+ <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }, function(err) {
+          console.log('Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
+  
+  
     
 </body>
 

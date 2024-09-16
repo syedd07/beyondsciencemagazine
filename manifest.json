@@ -1,0 +1,37 @@
+    {
+        "name": "Beyond Science Magazine",
+        "short_name": "Beyond Science",
+        "description": "Your gateway to scientific discoveries",
+        "author": "Syed Yousuf Ali",
+        "start_url": "/index.html",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#181d23",
+        "icons": [
+            {
+                "src": "articles/images/favicon_io/android-chrome-192x192.png",
+                "sizes": "192x192",
+                "type": "image/png"
+            },
+            {
+                "src": "articles/images/favicon_io/android-chrome-512x512.png",
+                "sizes": "512x512",
+                "type": "image/png"
+            }
+        ],
+        "screenshots": [
+              {
+                "src": "articles/images/screenshot1.png",
+                "sizes": "1117x1189",
+                "type": "image/png"
+              },
+              {
+                "src": "articles/images/Screenshot2.png",
+                "sizes": "1117x1189",
+                "type": "image/png"
+              }
+            ]
+          }
+          
+  
+  
