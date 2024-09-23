@@ -31,7 +31,24 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('form');
+    var loader = document.getElementById('loader');
 
+    form.addEventListener('submit', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Show the loader
+        loader.style.display = 'flex';
+
+        // Wait for 4 seconds before submitting the form
+        setTimeout(function() {
+            // Submit the form
+            form.submit();
+        }, 4000); // 4000 milliseconds = 4 seconds
+    });
+});
 (function($) {
 
 	var	$window = $(window),
