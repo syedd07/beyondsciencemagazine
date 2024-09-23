@@ -9,12 +9,12 @@
 
     <link rel="stylesheet" href="/assets/css/main.css" />
     <!-- Fav icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_io/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon_io/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon_io/android-chrome-512x512.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="images/favicon_io/android-chrome-512x512.png">
+    <link rel="manifest" href="site.webmanifest">
     <!-- Ad Sense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8073481325419550" crossorigin="anonymous"></script>
 </head>
@@ -39,45 +39,35 @@
                     <header class="main">
                         <h2 id="content">We'd love to hear from you!</h2>
                     </header>
-                    <form class="w3-container" action="https://api.web3forms.com/submit" method="POST">
-                        <!-- Replace with your Access Key Do not use my Key! -->
-                        <input type="hidden" name="access_key" value="80a14dc5-2d95-4f6c-b7e3-a0e1a62d8e8f">
-
-                        <div class="field half first">
-                            
-                            <label for="name">Name
-                                <span style="color: red !important; display: inline; float: none;">*</span>
-                            </label>
-                            <input class="w3-input" type="text" id="name" name="name" placeholder="Your Name" required>
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
+                        <div id="loader" style="display: none;">
+                        <img src="images/loader.gif" alt="Loading...">
                         </div>
+                        <label for="name" style="display: inline-block; vertical-align: top;">Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
-                        <div class="field half">
-                            <label for="email">Email
-                                <span style="color: red !important; display: inline; float: none;"> *</span>
-                            </label>
-                            <input class="w3-input" type="email" id="email" name="email" placeholder="Your Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+">
-                        </div>
+                        <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
                         <br>
-                        <div class="field">
-                            <label for="message">Message
-                                <span style="color: red !important; display: inline; float: none;"> *</span>
-                            </label>
-                            <textarea class="w3-input" id="message" name="message" placeholder="Your Message" rows="6" required></textarea>
-                        </div>
+                        <label for="email" style="display: inline-block; vertical-align: top;">Email</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
-              <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
-              <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label>
+                        <input type="email" id="email" name="email" placeholder="E-book will be sent on this mail" required>
                         <br>
+                        <label for="message" style="display: inline-block; vertical-align: top;">Reason</label><span style="color: red !important; display: inline; float: none;"> *</span>
+                        <br>
+                        <textarea id="message" name="message" placeholder="Write your query!" required></textarea>
+                        <br>
+                        <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
+                        <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label>
+                        <br>
+                        <button type="submit">submit</button>
+                      </form>
                         <hr>
                         <ul class="actions">
-                            <li><button class="w3-button w3-blue" type="submit">Submit</button></li>
-                            <li><button class="w3-button w3-light-gray" type="reset">Reset</button></li>
-                            <li><a href="/index.html" class="button">Back to Home</a></li>
+                           <li><a href="/index.html" class="button">Back to Home</a></li>
                         </ul>
-                    </form>
-                </section>
-            </div>
-        </div>
+                    </section>
+                </div>
+             </div>
             <!-- Sidebar -->
             <div id="sidebar">
                 <div class="inner">

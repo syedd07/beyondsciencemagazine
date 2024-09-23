@@ -350,7 +350,7 @@
                     var survey = document.getElementById('survey');
                     var otherContainer = document.getElementById('other-container');
                 
-                    // If the "Other" option is selected, append the textarea with spacing
+                    
                     if (survey.value === 'Other') {
                         otherContainer.innerHTML = `
                             <label for="other-text" style="display: inline-block; vertical-align: top; margin-top: 10px;">
@@ -359,7 +359,7 @@
                             <textarea name="other-text" id="other-text" rows="4" cols="50" required style="display: block; margin: 10px 0;"></textarea>
                         `;
                     } else {
-                        // Clear the textarea if a different option is selected
+                        
                         otherContainer.innerHTML = '';
                     }
                 }
