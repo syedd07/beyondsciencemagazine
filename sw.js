@@ -15,7 +15,7 @@ const urlsToCache = [
   'books.html',
   'articles.html',
   
-  '/articles/images/favicon_io/icon-192x192.png'
+  'articles/images/favicon_io/icon-192x192.png'
 ];
 
 self.addEventListener('install', function(event) {
@@ -32,9 +32,9 @@ self.addEventListener('fetch', function(event) {
     caches.match(event.request)
       .then(function(response) {
         if (response) {
-          return response;  // Return from cache if found
+          return response;  
         }
-        return fetch(event.request);  // Otherwise fetch from network
+        return fetch(event.request);  
       })
   );
 });
