@@ -1,8 +1,13 @@
 const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
   '/',
-  '/styles/main.css',
-  '/script/main.js',
+  '/assets/css/main.css',
+  '/assets/js/search.js',
+  '/assets/js/util.js',
+  '/assets/js/jquery.min.js',
+  '/assets/js/browser.min.js',
+  '/assets/js/breakpoints.min.js',
+  'assets/js/main.js',
   '/index.html',
   '/about.html',
   '/contact.html',
