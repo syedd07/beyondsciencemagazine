@@ -46,13 +46,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
     const formType = urlParams.get('formType'); // Capture the form type parameter
     
-    const messageContainer = document.getElementById('dynamic-message'); // Assuming this ID exists in your thank.html
+    const messageContainer = document.getElementById('dynamic-message'); 
 
     if (formType === 'ebook') {
         // Append e-book message
         messageContainer.innerHTML = `
             <p>Thank you for requesting the e-book! We appreciate your interest and will send it to you via email shortly. 
-            If you have any questions or need immediate assistance, feel free to contact us at Contact us.</p>`;
+            If you have any questions or need immediate assistance, you may contact +91 7411666573</p>`;
     } else if (formType === 'contact') {
         // Append contact form message
         messageContainer.innerHTML = `
