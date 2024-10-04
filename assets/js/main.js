@@ -31,6 +31,27 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 
+//e-book & contact custom url
+document.addEventListener("DOMContentLoaded", function() {
+    // Check the URL parameter to determine where the form submission came from
+    const urlParams = new URLSearchParams(window.location.search);
+    const formType = urlParams.get('formType'); // Capture the form type parameter
+    
+    const messageContainer = document.getElementById('dynamic-message'); // Assuming this ID exists in your thank.html
+
+    if (formType === 'ebook') {
+        // Append e-book message
+        messageContainer.innerHTML = `
+            <p>Thank you for requesting the e-book! We appreciate your interest and will send it to you via email shortly. 
+            If you have any questions or need immediate assistance, feel free to contact us at Contact us.</p>`;
+    } else if (formType === 'contact') {
+        // Append contact form message
+        messageContainer.innerHTML = `
+            <p>Thank you for contacting us! We’ll get back to you shortly.</p>`;
+    }
+});
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var form = document.querySelector('form');
     var loader = document.getElementById('loader');
