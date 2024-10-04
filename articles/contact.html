@@ -41,8 +41,9 @@
                     </header>
                     <form action="https://api.web3forms.com/submit" method="POST">
                         <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
+                        <input type="hidden" name="redirect" value="https://beyondsciencemagazine.studio/thanks.html">
                         <div id="loader" style="display: none;">
-                        <img src="images/loader.gif" alt="Loading...">
+                          <img src="images/loader.gif" alt="Loading...">
                         </div>
                         <label for="name" style="display: inline-block; vertical-align: top;">Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
@@ -59,7 +60,7 @@
                         <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
                         <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label>
                         <br>
-                        <button type="submit">submit</button>
+                        <button type="submit" id="contact-btn">submit</button>
                       </form>
                         <hr>
                         <ul class="actions">
