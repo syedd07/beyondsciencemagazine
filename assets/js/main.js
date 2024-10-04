@@ -32,6 +32,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 //e-book & contact custom url
+function setRedirectURL(formType) {
+	var redirectField = document.getElementById('redirect-url');
+	
+	if (formType === 'ebook') {
+		redirectField.value = "https://beyondsciencemagazine.studio/thanks.html?source=ebook";
+	} else if (formType === 'contact') {
+		redirectField.value = "https://beyondsciencemagazine.studio/thanks.html?source=contact";
+	}
+}
 document.addEventListener("DOMContentLoaded", function() {
     // Check the URL parameter to determine where the form submission came from
     const urlParams = new URLSearchParams(window.location.search);
