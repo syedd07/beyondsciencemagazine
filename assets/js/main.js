@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function setRedirectURL(formType) {
 	var redirectField = document.getElementById('redirect-url');
 	
-	if (formType === 'ebook') {
+	if (formType === 'ebooks') {
 		redirectField.value = "https://beyondsciencemagazine.studio/thanks.html?source=ebook";
 	} else if (formType === 'contact') {
 		redirectField.value = "https://beyondsciencemagazine.studio/thanks.html?source=contact";
@@ -48,15 +48,15 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const messageContainer = document.getElementById('dynamic-message'); 
 
-    if (formType === 'ebook') {
+    if (formType === 'ebooks') {
         // Append e-book message
-        messageContainer.innerHTML = `
+        messageContainer.innerText = `
             <p>Thank you for requesting the e-book! We appreciate your interest and will send it to you via email shortly. 
             If you have any questions or need immediate assistance, you may contact +91 7411666573</p>`;
     } else if (formType === 'contact') {
         // Append contact form message
-        messageContainer.innerHTML = `
-            <p>Thank you for contacting us! We’ll get back to you shortly.</p>`;
+        messageContainer.innerText = `
+            <p>Thank you for contacting us! We'll get back to you shortly.</p>`;
     }
 });
 
