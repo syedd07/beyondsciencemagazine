@@ -31,54 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 
-//e-book & contact custom url
-function setRedirectURL(formType) {
-	var redirectField = document.getElementById('redirect-url');
-	
-	if (formType === 'ebooks') {
-		redirectField.value = "https://beyondsciencemagazine.studio/thanks.html?source=ebook";
-	} else if (formType === 'contact') {
-		redirectField.value = "https://beyondsciencemagazine.studio/thanks.html?source=contact";
-	}
-}
-document.addEventListener("DOMContentLoaded", function() {
-    // Check the URL parameter to determine where the form submission came from
-    const urlParams = new URLSearchParams(window.location.search);
-    const formType = urlParams.get('formType'); // Capture the form type parameter
-    
-    const messageContainer = document.getElementById('dynamic-message'); 
-
-    if (formType === 'ebooks') {
-        // Append e-book message
-        messageContainer.innerText = `
-            <p>Thank you for requesting the e-book! We appreciate your interest and will send it to you via email shortly. 
-            If you have any questions or need immediate assistance, you may contact +91 7411666573</p>`;
-    } else if (formType === 'contact') {
-        // Append contact form message
-        messageContainer.innerText = `
-            <p>Thank you for contacting us! We'll get back to you shortly.</p>`;
-    }
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form');
-    var loader = document.getElementById('loader');
-
-    form.addEventListener('submit', function(event) {
-        // Prevent the default form submission
-        event.preventDefault();
-
-        // Show the loader
-        loader.style.display = 'flex';
-
-        // Wait for 4 seconds before submitting the form
-        setTimeout(function() {
-            // Submit the form
-            form.submit();
-        }, 4000); // 4000 milliseconds = 4 seconds
-    });
-});
 (function($) {
 
 	var	$window = $(window),
