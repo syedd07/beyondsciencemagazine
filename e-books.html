@@ -69,9 +69,9 @@
                     <strong><p>Exciting news! Our e-books, which are usually priced at $5.99, are now available for <span style="color: red;">free!</span> Take advantage of this limited-time offer and expand your knowledge in various fields of science and technology. Fill out the form below to request your free e-book.</p></strong>
                     <form action="https://api.web3forms.com/submit" method="POST">
 
-                        <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
-                        <input type="hidden" name="redirect" value="https://beyondsciencemagazine.studio/thanks.html">
-                        <div id="loader" style="display: none;">
+                        <input type="hidden" name="access_key" value="83216218-34fe-40ee-b793-d0089a139cdd">
+                        
+                        <div id="loader">
                             <img src="articles/images/loader.gif" alt="Loading...">
                         </div>
                         <script>
@@ -350,7 +350,16 @@
                             <!-- Add more e-book options as needed -->
                         </select>
                         <br>
-
+                        <label for="survey" style="display: inline-block; vertical-align: top;">How did you hear about us?</label><span style="color: red !important; display: inline; float: none;"> *</span>
+                        <br>
+                        <select name="survey" id="survey" required>
+                            <option value="" selected disabled > Select an option</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Researcher">Researcher</option>
+                            <option value="word of mouth">Word of mouth</option>
+                            </select>
+                            <br>
                         <label for="reason" style="display: inline-block; vertical-align: top;">Reason</label>
                         <br>
                         <textarea id="reason" name="reason" placeholder="Why do you need this e-book?"></textarea>
@@ -359,9 +368,15 @@
                         <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
                         <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label>
                         <br>
-
-                        <button type="submit">Request E-book</button>
+                        <button type="submit">Get E-book</button>
+                        <hr>
+                        
+                        <p>
+                            Once you click on "Get e-book" a one time download link will be created, please download the book. If any error occurs or the page reload you may can request again by filling the above form!
+                        </p>
                     </form>
+                    
+                    <br>
                     <div class="box">
                         <p><strong>Disclaimer:</strong> By submitting this form, you agree to receive emails from BEYOND SC!ENCE Magazine. You can unsubscribe at any time. We respect your privacy and will not share your information with third parties.</p>
                     </div>
@@ -523,6 +538,7 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/search.js"></script>
+    <script src="assets/js/ebook.js"></script>
     <!-- Form submission Script -->
     <script>
         document.getElementById('ebook-request-form').addEventListener('submit', function(event) {
