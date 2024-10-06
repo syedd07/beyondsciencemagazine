@@ -4,8 +4,11 @@ Welcome to Beyond Science Magazine – a digital platform designed to explore th
 Beyond Science Magazine is more than just a publication. It's a community for forward-thinkers, innovators, and enthusiasts who seek to understand and shape the future. Our goal is to make complex scientific concepts accessible and intriguing for a broad audience while staying committed to accuracy and insight.
 <h2>Features</h2>
 -    Dynamic Articles: Stay updated with the latest trends in science and technology.
+
 -    Interactive E-Books: Dive deep into our research-based e-books.
+    
 -    Contact Form: Easily reach out to us for inquiries or collaborations.
+  
 -    Responsive Design: Optimized for both desktop and mobile users.
 <h2>Contact Us</h2>
 Feel free to get in touch with us at <a href="mailto:admin@beyondsciencemagazine">admin@beyondsciencemagazine</a> for any queries, feedback, or collaboration proposals.
