@@ -2391,3 +2391,66 @@ button,
     transform: translate(-50%, -50%);
     z-index: 9999;
 }
+
+/* PWA loader */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; 
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 10000; 
+}
+.dots {
+  opacity: 0;
+  animation: blink 1s infinite; /* Continuous animation */
+}
+
+@keyframes blink {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 0; }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+.dots:nth-child(2) { animation-delay: 0.2s; }
+.dots:nth-child(3) { animation-delay: 0.4s; }
+.dots:nth-child(4) { animation-delay: 0.6s; }
+#loading-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  
+}
+
+#loading-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f56a6a;
+  margin-top: 10px; 
+  text-align: center; 
+}
+
+body.loading {
+  overflow: hidden; /* Prevent scrolling */
+}
+
+body.loading #loading-screen {
+  display: flex; /* Ensure loading screen is visible */
+}
+
+body:not(.loading) #loading-screen {
+  display: none; /* Hide loading screen when not loading */
+}
+
+/* Adjust sidebar button style (if needed) */
+.sidebar-menu {
+  display: none; /* Hide sidebar menu during loading */
+}

@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 downloadLink.className = 'button';
                 downloadSection.innerHTML = '';
                 downloadSection.appendChild(downloadLink);
+                downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
                 downloadSection.textContent = 'There was an error. Please try again.';
             }

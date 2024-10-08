@@ -56,7 +56,8 @@
                 </header>
                 <!-- Content -->
                 <section>
-                    <h1>BEYOND SC!ENCE Magazine E-books</h1>
+                    <h1>BEYOND SC!ENCE MAGAZINE's E-books</h1>
+                    <hr>
                     <p>Here you can find our collection of e-books that cover a wide range of topics, from biotechnology to space exploration. Our e-books are designed to provide you with in-depth knowledge and insights into the latest breakthroughs and
                         innovations in science and technology. Whether you are a student, researcher, or science enthusiast, our e-books are sure to inspire and educate you. So go ahead and explore our collection of e-books and take your knowledge to
                         the next level!</p>
@@ -65,14 +66,13 @@
                 <!-- Form -->
                 <section>
                     <h2>Request Our E-books</h2>
-                    <p>Fill out the form below to request our e-books. Once you submit the form, you will receive an email with the e-book. If you have any questions or need further assistance, please feel free to <a href="articles/contact.html">contact us</a>.</p>
                     <strong><p>Exciting news! Our e-books, which are usually priced at $5.99, are now available for <span style="color: red;">free!</span> Take advantage of this limited-time offer and expand your knowledge in various fields of science and technology. Fill out the form below to request your free e-book.</p></strong>
                     <form action="https://api.web3forms.com/submit" method="POST">
 
                         <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
                         
                         <div id="loader">
-                            <img src="articles/images/loader.gif" alt="Loading...">
+                            <img src="/articles/images/loader.gif" alt="Loading...">
                         </div>
                         <script>
                             // Show loader when form is submitted
@@ -349,28 +349,48 @@
                             <option value="Jan edition">January edition</option>
                             <!-- Add more e-book options as needed -->
                         </select>
+                        
                         <br>
-                        <label for="survey" style="display: inline-block; vertical-align: top;">How did you hear about us?</label><span style="color: red !important; display: inline; float: none;"> *</span>
+                        <label for="survey" style="display: inline-block; vertical-align: top;">
+                            How did you hear about us?
+                        </label>
+                        <span style="color: red !important; display: inline; float: none;"> *</span>
+                        <select name="survey" id="survey" required onchange="showOtherField()">
+                            <option value="" selected disabled>Select an option</option>
+                            <option value="Social Media">Instagram</option>
+                            <option value="Linkedin">Linkedin</option>
+                            <option value="word">Word of mouth</option>
+                            <option value="researcher">Researcher</option>
+                            <option value="Other">Other (specify)</option>
+                        </select>
+                        <div id="other-container"></div>
+                        <script>
+                            function showOtherField() {
+                                var survey = document.getElementById('survey');
+                                var otherContainer = document.getElementById('other-container');
+                                if (survey.value === 'Other') {
+                                    otherContainer.innerHTML = `
+                                        <label for="other-text" style="display: inline-block; vertical-align: top; margin-top: 10px;">
+                                            Please specify:
+                                        </label>
+                                        <textarea name="other-text" id="other-text" rows="4" cols="50" required style="display: block; margin: 10px 0;"></textarea>
+                                    `;
+                                } else {
+                                    // Clear the textarea if a different option is selected
+                                    otherContainer.innerHTML = '';
+                                }
+                            }
+                        </script>
                         <br>
-                        <select name="survey" id="survey" required>
-                            <option value="" selected disabled > Select an option</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="LinkedIn">LinkedIn</option>
-                            <option value="Researcher">Researcher</option>
-                            <option value="word of mouth">Word of mouth</option>
-                            </select>
-                            <br>
                         <label for="reason" style="display: inline-block; vertical-align: top;">Reason</label>
                         <br>
                         <textarea id="reason" name="reason" placeholder="Why do you need this e-book?"></textarea>
                         <br>
-
                         <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
                         <label for="privacy-policy">I agree to the <a href="articles/privacy.html">Privacy Policy</a></label>
                         <br>
                         <button type="submit">Get E-book</button>
                         <hr>
-                        
                         <p>
                             Once you click on "Get e-book" a one time download link will be created, please download the book. If any error occurs or the page reload you may can request again by filling the above form!
                         </p>
@@ -540,7 +560,8 @@
     <script src="assets/js/search.js"></script>
     <script src="assets/js/ebook.js"></script>
     <!-- Form submission Script -->
-    <script>
+   
+    <!--<script>
         document.getElementById('ebook-request-form').addEventListener('submit', function(event) {
           event.preventDefault();
     
@@ -561,7 +582,20 @@
             alert('There was an error. Please try again.');
           });
         });
-    </script>
+    </script> -->
+     <!-- Prograssive Web App -->
+ <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }, function(err) {
+          console.log('Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
+
     <script>
         $(document).ready(function() {
             $('#country').select2({

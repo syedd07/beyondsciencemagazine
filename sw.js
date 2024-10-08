@@ -11,10 +11,14 @@ const urlsToCache = [
   'index.html',
   'about.html',
   '/articles/contact.html',
+  '/articles/abinayah.html',
+  '/articles/brooke.html',
+  '/articles/lumila.html',
+  '/articles/luis.html',
+  '/articles/vittoria.html',
   'e-books.html',
   'books.html',
   '/articles/article.html',
-  
   'articles/images/favicon_io/icon-192x192.png'
 ];
 

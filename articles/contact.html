@@ -39,19 +39,25 @@
                     <header class="main">
                         <h2 id="content">We'd love to hear from you!</h2>
                     </header>
-                    <form action="https://api.web3forms.com/submit" method="POST" onsubmit="setRedirectURL('contact')"></form>>
+                    <form action="https://api.web3forms.com/submit" method="POST" >
                         <input type="hidden" name="access_key" value="807e1bcf-ad3d-4f4e-a44d-cc96ddcf5210">
                         <input type="hidden" name="redirect" value="https://beyondsciencemagazine.studio/thanks.html">
-                        <div id="loader" style="display: none;">
-                          <img src="images/loader.gif" alt="Loading...">
+                        <div id="loader">
+                            <img src="/articles/images/loader.gif" alt="Loading...">
                         </div>
-                        <label for="name" style="display: inline-block; vertical-align: top;">Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
+                        <script>
+                            // Show loader when form is submitted
+                            $('form').submit(function() {
+                                $('#loader').show();
+                            });
+                        </script>
+                        <label for="name" style="display: inline-block; vertical-align: top;"> Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
                         <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
                         <br>
                         <label for="email" style="display: inline-block; vertical-align: top;">Email</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
-                        <input type="email" id="email" name="email" placeholder="E-book will be sent on this mail" required>
+                        <input type="email" id="email" name="email" placeholder="yourmail@example.com" required>
                         <br>
                         <label for="message" style="display: inline-block; vertical-align: top;">Reason</label><span style="color: red !important; display: inline; float: none;"> *</span>
                         <br>
@@ -67,6 +73,7 @@
                            <li><a href="/index.html" class="button">Back to Home</a></li>
                         </ul>
                     </section>
+                    
                 </div>
              </div>
             <!-- Sidebar -->
