@@ -1,0 +1,7 @@
+# Block direct access to the PDFs unless referred from e-books.html
+/assets/books/January%20Edition.pdf  /403.html  403!  # Blocks direct access
+/assets/books/November%20Edition.pdf  /403.html  403!  # Blocks direct access
+
+# Allow access from e-books.html
+/assets/books/January%20Edition.pdf  /assets/books/January%20Edition.pdf  200!
+/assets/books/November%20Edition.pdf  /assets/books/November%20Edition.pdf  200!

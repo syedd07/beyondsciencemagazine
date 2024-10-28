@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>403 Forbidden!</title>
+    <meta name="title" content="403 Forbidden" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="BEYOND SC!ENCE Magazine is a platform that features researchers and science communicators from all around the world, bringing out the stories of the people behind the science. We believe researchers are the real truth seekers. Explore our in-depth articles, expert interviews, and the latest breakthroughs across various fields, from biotechnology to space exploration."
+    />
+    <meta
+      name="keywords"
+      content="Beyond Science Magazine, Science, Research, Breakthroughs, Innovations, Curiosity, Determination, Brighter Future, Amazon"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- Fav icons-->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="articles/images/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="articles/images/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="articles/images/favicon_io/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="articles/images/favicon_io/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="articles/images/favicon_io/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="articles/site.webmanifest" />
+
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <body class="is-preload">
+      <!-- Wrapper -->
+      <div id="wrapper">
+        <!-- Main -->
+        <div id="main">
+          <div class="inner">
+            <!-- Header -->
+            <header id="header">
+              <a href="index.html" class="logo"
+                ><strong>BEYOND SC!ENCE Magazine</strong></a
+              >
+            </header>
+            <h1 style="text-align: center; font-size: 15vw">403</h1>
+            <div>
+              <p>> <span>ERROR CODE</span>: "<i>HTTP 403 Forbidden</i>"</p>
+              <p>
+                > <span>ERROR DESCRIPTION</span>: "<i
+                  ><strong
+                    >Access Denied. You Do Not Have The Permission To Access
+                    This Page On This Server</strong
+                  ></i
+                >"
+              </p>
+              <p>
+                > <span>ERROR POSSIBLY CAUSED BY</span>: [<b
+                  >execute access forbidden, read access forbidden, write access
+                  forbidden, ssl required, ssl 128 required, ip address
+                  rejected, client certificate required, site access denied, too
+                  many users, invalid configuration, password change, mapper
+                  denied access, client certificate revoked, directory listing
+                  denied, client access licenses exceeded, client certificate is
+                  untrusted or invalid, client certificate has expired or is not
+                  yet valid, passport logon failed, source access denied,
+                  infinite depth is denied, too many requests from the same
+                  client ip</b
+                >...]
+              </p>
+              <p>
+                >
+                <span
+                  >SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO
+                  ACCESS</span
+                >: [<a href="/index.html">Home Page</a>,
+                <a href="/articles/about.html">About Us</a>,
+                <a href="/articles/contact.html">Contact Us</a>,
+                <a href="/articles/article.html">features</a>...]
+              </p>
+              <p>> <span>HAVE A NICE DAY SIR :-)</span></p>
+            </div>
+            
+
+            <script>
+              var str = document
+                .getElementsByTagName("div")[0]
+                .innerHTML.toString();
+              var i = 0;
+              document.getElementsByTagName("div")[0].innerHTML = "";
+
+              setTimeout(function () {
+                var se = setInterval(function () {
+                  i++;
+                  document.getElementsByTagName("div")[0].innerHTML =
+                    str.slice(0, i) + "|";
+                  if (i == str.length) {
+                    clearInterval(se);
+                    document.getElementsByTagName("div")[0].innerHTML = str;
+                  }
+                }, 10);
+              }, 0);
+            </script>
+          </div>
+        </div>
+      </div>
+    </body>
+  </head>
+</html>
