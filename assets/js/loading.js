@@ -6,6 +6,6 @@ document.body.classList.add('loading');
 setTimeout(() => {
     // Hide loading screen
     document.body.classList.remove('loading');
-}, 4000);
+}, 500);
 const startTime = performance.now();
 		
