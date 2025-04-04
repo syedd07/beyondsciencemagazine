@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const downloadLink = document.createElement('a');
                 // Match the exact string from your <option> values.
                 downloadLink.href = selectedEdition === 'November Edition' 
-                    ? 'assets/books/November Edition.pdf' 
-                    : 'assets/books/January Edition.pdf';
+                    ? 'assets/books/NovemberEdition.pdf' 
+                    : 'assets/books/JanuaryEdition.pdf';
                 downloadLink.textContent = `Download Now!`;
                 downloadLink.className = 'button';
                 downloadSection.innerHTML = '';
