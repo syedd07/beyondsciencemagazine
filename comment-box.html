@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="/assets/css/comment.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <div id="comment-box">
+    <h2>Join the Dissussion</h2>
+    
+        <form id="comment-form">
+            <label for="name" style="display: inline-block; vertical-align: top;">Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
+            
+            <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+            
+            <label for="email" style="display: inline-block; vertical-align: top;">Email</label><span style="color: red !important; display: inline; float: none;"> *</span>
+            
+            <input type="email" id="email" placeholder="Your Email" required>
+            
+            <label for="designation" style="display: inline-block; vertical-align: top;">Designation</label>
+            <span style="color: red !important; display: inline; float: none;"> (optional)</span>
+                    
+            <input type="text" id="designation" placeholder="Your Designation (optional)">
+            
+            <label for="text" style="display: inline-block; vertical-align: top;">Comment</label><span style="color: red !important; display: inline; float: none;"> *</span>
+            
+            <textarea id="text" placeholder="Say something!" required></textarea>
+            <br>
+            <input type="hidden" id="parentId" value="">
+
+            <button type="submit">Post Comment</button>
+        </form>
+        <div id="comments-container"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
+</html>

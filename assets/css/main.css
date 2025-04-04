@@ -2454,3 +2454,16 @@ body:not(.loading) #loading-screen {
 .sidebar-menu {
   display: none; /* Hide sidebar menu during loading */
 }
+
+
+/* large scree image size  */
+
+/* Add this media query (e.g., at the end of the file) to reduce the main image size for desktop screens */
+@media (min-width: 1024px) {
+  .image.main img {
+    max-width: 80%; /* Adjust this percentage as needed */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Centers the image */
+  }
+}

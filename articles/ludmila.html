@@ -96,6 +96,19 @@
                                     </p>
                                     <button ><a href="/index.html">back to home?</a></button>
                             <hr class="major" />
+                            <section>
+                                <div id="comment-box-placeholder"></div>
+                                <script>
+                                    fetch('/comment-box.html')
+                                      .then(res => res.text())
+                                      .then(html => {
+                                        document.getElementById('comment-box-placeholder').innerHTML = html;
+                                      });
+                                </script>
+                                <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
+                                <script src="/assets/js/comment.js"></script>
+                            </section>
+                            
                     <section>
                            <header class="major">
                             <h2>Checkout out other features!</h2>

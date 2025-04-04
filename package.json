@@ -1,0 +1,10 @@
+{
+  "name": "beyond-science-magazine",
+  "version": "2.0.0",
+  "description": "A magazine about science and technology.",
+  "author": "Syed Yousuf Ali",
+  
+  "dependencies": {
+    "prettier": "^3.5.3"
+  }
+}
