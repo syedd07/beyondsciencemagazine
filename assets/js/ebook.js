@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const selectedEdition = formData.get('E-book');
+        // Ensure we use the correct form control name and remove extra spaces
+        const selectedEdition = formData.get('ebook')?.trim();
+        console.log('Selected edition:', selectedEdition);
 
         fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loader.style.display = 'none';
             if (data.success) {
                 const downloadLink = document.createElement('a');
+                // Match the exact string from your <option> values.
                 downloadLink.href = selectedEdition === 'November Edition' 
                     ? 'assets/books/November Edition.pdf' 
                     : 'assets/books/January Edition.pdf';
