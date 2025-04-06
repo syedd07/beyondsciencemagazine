@@ -2467,3 +2467,97 @@ body:not(.loading) #loading-screen {
     margin: 0 auto; /* Centers the image */
   }
 }
+
+/* Hide the default file input */
+input[type="file"] {
+  display: none;
+}
+
+
+/* Quill.js */
+
+/* Prevent global styles from affecting Quill */
+
+.ql-toolbar.ql-snow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* space between buttons */
+  padding: 12px;/* increases internal padding */
+  border-radius: 4px;
+  align-items: center;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
+  min-height: 48px; /* increases overall toolbar height */
+  
+}
+.ql-toolbar .ql-formats {
+  margin-right: 10px; /* space between button groups */
+}
+
+.ql-toolbar button,
+.ql-toolbar .ql-picker {
+  margin-right: 6px !important; /* space between individual buttons */
+}
+
+/* Custom font name display */
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="times-new-roman"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="times-new-roman"]::before {
+  content: "Times New Roman" !important;
+  font-family: "Times New Roman", serif;
+  font-size: 10px;
+}
+
+/* Optional: Improve overall font dropdown display */
+.ql-snow .ql-picker.ql-font .ql-picker-item {
+  font-size: 14px;
+}
+
+/* Quill.js enhance for Mobile Divices */
+
+@media (max-width: 600px) {
+  .ql-toolbar {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px !important;
+    box-sizing: border-box;
+  }
+
+  .ql-toolbar .ql-formats {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .ql-toolbar button,
+  .ql-toolbar .ql-picker {
+    margin-right: 6px;
+  }
+
+  .ql-editor {
+    font-size: 15px;
+  }
+}
+#editor {
+  max-height: 400px;
+  overflow-y: auto;
+  resize: vertical; /* optional: lets user resize manually */
+}
+
+.ql-toolbar {
+  padding: 8px 10px !important;
+  gap: 6px !important;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.ql-toolbar .ql-formats {
+  margin-right: 10px;
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .ql-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
