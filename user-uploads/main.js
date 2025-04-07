@@ -194,3 +194,42 @@ window.addEventListener('DOMContentLoaded', () => {
     currentTranslateY = 0;
   });
 });
+
+// Generate OTP
+
+const verifyEmailBtn = document.getElementById('verifyEmailBtn');
+const otpSection = document.getElementById('otpSection');
+const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+const emailInput = document.getElementById('Email');
+const otpInput = document.getElementById('otpInput');
+const emailVerifiedMsg = document.getElementById('emailVerifiedMsg');
+
+let generatedOTP = null; // will store OTP here
+
+verifyEmailBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email before verifying.');
+    return;
+  }
+
+  // generate OTP
+  generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // TODO: Send `generatedOTP` via Appwrite + Mailgun here
+  console.log('Generated OTP:', generatedOTP);
+
+  alert('An OTP has been sent to your email.');
+  otpSection.style.display = 'block';
+});
+
+verifyOtpBtn.addEventListener('click', () => {
+  const enteredOtp = otpInput.value.trim();
+  if (enteredOtp === generatedOTP) {
+    emailVerifiedMsg.style.display = 'block';
+    otpSection.style.display = 'none';
+    verifyEmailBtn.style.display = 'none';
+  } else {
+    alert('Incorrect OTP. Please try again.');
+  }
+});
