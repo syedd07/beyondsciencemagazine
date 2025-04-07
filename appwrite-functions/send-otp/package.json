@@ -1,14 +1,13 @@
 {
-  "name": "send-otp",
-  "version": "1.0.0",
-  "description": "Appwrite function to send OTP via Mailgun",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "mailgun.js": "^8.1.1",
-    "form-data": "^4.0.0"
-  }
+  "functions": [
+    {
+      "name": "send-otp",
+      "runtime": "node-18.0",
+      "entrypoint": "appwrite-function/send-otp/index.js",
+      "env": {
+        "MAILGUN_API_KEY": "your-api-key",
+        "MAILGUN_DOMAIN": "your-domain"
+      }
+    }
+  ]
 }
