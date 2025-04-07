@@ -3,7 +3,7 @@
     {
       "name": "send-otp",
       "runtime": "node-18.0",
-      "entrypoint": "appwrite-function/send-otp/index.js",
+      "entrypoint": "appwrite-functions/send-otp/index.js",
       "env": {
         "MAILGUN_API_KEY": "your-api-key",
         "MAILGUN_DOMAIN": "your-domain"
