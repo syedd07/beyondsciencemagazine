@@ -70,21 +70,40 @@
                                 <br>
                                 
                                 <label for="email" style="display: inline-block; vertical-align: top;">Email</label>
-                                <span style="color: red !important; display: inline; float: none;"> *</span>
-                                <input type="email" id="Email" placeholder="Enter Your Email" name="Email" required>
-                                <!-- Verify Email Link -->
-                                 <span id="verifyEmailBtn" style="color: blue; cursor: pointer; font-size: 14px; margin-left: 10px;">Verify Email</span>
-                                 <!-- OTP Input Section (hidden by default) -->
+                                <span style="color: red !important; display: inline; float: none;"> *</span><br>
+                                <div style="position: relative; display: inline-block;  width: 100%;">
+                                    <input
+                                      type="email"
+                                      id="Email"
+                                      placeholder="Enter Your Email"
+                                      class="email"
+                                      name="Email"
+                                      required
+                                      style="padding-right: 100px; width: 100%; box-sizing: border-box;" />
+                                  
+                                    <span
+                                      id="verifyEmailBtn"
+                                      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+                                             color: blue; cursor: pointer; font-size: 14px;">
+                                      Verify Email
+                                    </span>
+                                  </div>
+                                  
+                                  <!-- OTP Input Section (hidden by default) -->
                                   <div id="otpSection" style="display: none; margin-top: 10px;">
-                                    <input type="text" id="otpInput" placeholder="Enter OTP" style="padding: 5px; width: 150px;">
-                                    <button id="verifyOtpBtn" style="padding: 5px 10px;">Verify OTP</button>
-                                </div>
-                                <!-- Email Verified Message -->
-                                 <div id="emailVerifiedMsg" style="color: green; font-size: 14px; display: none; margin-top: 8px;">
+                                    <input type="text" id="otpInput" placeholder="Enter OTP" style="width: 150px;">
+                                    <br>
+                                    <button id="verifyOtpBtn">Verify OTP</button>
+                                  </div>
+                                  
+                                  <!-- Email Verified Message -->
+                                  <div id="emailVerifiedMsg" style="color: green; font-size: 14px; display: none; margin-top: 8px;">
                                     ✔ Email Verified
-                                </div>
+                                  </div>
+                                  
                                 <br>
-                                <label for="country" style="display: inline-block; vertical-align: top;">Country</label><span style="color: red !important; display: inline; float: none;"> *</span>
+                                <br>
+                                <label for="country" style="display: inline-block; vertical-align: top;">Country</label><span style="color: red !important; display: inline; float: none;   "> *</span>
                                 <input type="text" id="Country" placeholder="Enter Your Country" name="Country" required>
                                 <br>
 
@@ -132,7 +151,7 @@
                                 
                                 <label for="profilePic" style="display: inline-block; vertical-align: top;">Picture</label>
                                 <span style="color: red !important;"> *</span><br>
-                                <label for="profilePic" id="uploadLabel" class="button"><em>Upload a Picture (.WebP preferred):</em></label>
+                                <label for="profilePic" id="uploadLabel" class="button"><em>Upload a Picture</em></label>
                                 <input type="file" id="profilePic" name="profilePic" accept="image/*" required ><br>
                                 <div id="fileUploadStatus" style="margin-top: 5px;"></div>
 

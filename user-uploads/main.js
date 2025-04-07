@@ -104,7 +104,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const storyHTML = document.querySelector('#editor .ql-editor').innerHTML;
 
     // Truncate the HTML content to 1200 characters
-    if (storyHTML.length > 1200) {
+    if (storyHTML.length > 150000) {
       alert('Your story is too long. Please shorten it to fit within 1200 characters.');
       return;
     }
