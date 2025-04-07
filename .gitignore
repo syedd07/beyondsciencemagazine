@@ -1,1 +1,6 @@
 cmnt-reply-notify-funt-appwrite/
+node_modules/
+.vscode/
+package-lock.json
+*.log
+*.env

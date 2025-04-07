@@ -21,14 +21,10 @@
     <!-- Ad Sense
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8073481325419550" crossorigin="anonymous"></script> -->
 
-   
-
     <!-- Quill CSS -->
      <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-     
-
-      
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     </head>
     <div class="progress-bar"></div>
     <body class="is-preload">
@@ -161,7 +157,7 @@
                                             tag.style.display = 'inline-block';
 
                                             const removeIcon = document.createElement('span');
-                                            removeIcon.textContent = ' ×';
+                                            removeIcon.textContent = ' x';
                                             removeIcon.style.cursor = 'pointer';
                                             removeIcon.addEventListener('click', function () {
                                                 tagsWrapper.removeChild(tag);
@@ -192,7 +188,7 @@
                                 </script>
 
                                 <label for="ResearchTitle" style="display: inline-block; vertical-align: top;">Article Title</label><span style="color: red !important;"> *</span>
-                                <input type="text" id="Title" placeholder="Set a Title" name="Title" required>
+                                <input type="text" id="Title" placeholder="Set a Title for your article" name="Title" required>
                                 <br>
 
                                 <label for="story" style="display: inline-block; vertical-align: top;">Your Story/ Journey</label> 
@@ -203,7 +199,8 @@
                                 <input type="hidden" name="StoryContent" id="StoryContent">
                                 </div>
                                 <br>
-                                <button type="submit" style="margin-top: 10px;">Submit</button> <!-- important -->
+                                <div id="wordCount" style="margin-top: 10px; font-size: 14px; color: #555;">Word Count: 0</div>
+                                <button type="button" id="previewBtn" style="margin-top: 10px;">Preview</button> <!-- important -->
                             </form>
                             
                             
@@ -236,39 +233,54 @@
     Font.whitelist = ['times-new-roman', 'serif', 'sans-serif'];
     Quill.register(Font, true);
     
-    var quill = new Quill('#editor', {
-      theme: 'snow',
-      placeholder: 'Write your story here or past here...',
-      modules: {
-        toolbar: [
-            [{ 'font': ['times-new-roman', 'serif', 'sans-serif'] }, { 'size': [] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'script': 'sub'}, { 'script': 'super' }],
-            [{ 'header': [1, 2, 3, false] }],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'indent': '-1'}, { 'indent': '+1' }],
-            [{ 'direction': 'rtl' }],
-            [{ 'align': [] }],
-            [{ 'color': [] }, { 'background': [] }],
-            ['blockquote', 'code-block'],
-            ['link', 'image', 'video'],
-            ['clean']
-        ]
+// Initialize Quill editor
+var quill = new Quill('#editor', {
+  theme: 'snow',
+  placeholder: 'Write your story here or paste here... max words: 1200',
+  modules: {
+    toolbar: [
+      [{ 'font': ['times-new-roman', 'serif', 'sans-serif'] }, { 'size': [] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'header': [1, 2, 3, false] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'align': [] }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['blockquote', 'code-block'],
+      ['link', 'image', 'video'],
+      ['clean']
+    ]
+  }
+});
 
-      }
-    });
+// Set default font
+quill.format('font', 'times-new-roman');
 
-    // Set default font
-    quill.format('font', 'times-new-roman');
+// Add word count element dynamically
+const editorContainer = document.querySelector('#editor');
+const wordCountDiv = document.getElementById('wordCount');
+quill.on('text-change', function () {
+  const text = quill.getText().trim(); // Get plain text
+  const html = quill.root.innerHTML; // Get HTML content
+  const wordCount = text.length > 0 ? text.split(/\s+/).length : 0;
+  const charCount = html.length;
 
-    quill.blur();
-  
-    // On form submit, copy HTML content to hidden input
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function () {
-      document.getElementById('StoryContent').value = quill.root.innerHTML;
-    });
-    
+  wordCountDiv.textContent = `Word Count: ${wordCount}, Character Count: ${charCount}/1200`;
+
+  if (charCount > 1200) {
+    wordCountDiv.style.color = 'red';
+  } else {
+    wordCountDiv.style.color = '#555';
+  }
+});
+
+// On form submit, copy HTML content to hidden input
+const form = document.querySelector('form');
+form.addEventListener('submit', function () {
+  document.getElementById('StoryContent').value = quill.root.innerHTML;
+});
     window.scrollTo(0, 0);
   </script>
   
@@ -276,5 +288,19 @@
   
   <!-- JS Script -->
   <script src="/user-uploads/main.js"></script>
+
+  <!-- Preview Modal -->
+  
+  <div id="modalOverlay"></div>
+  
+  <div id="previewModal">
+    <div class="modal-drag-handle"></div>
+    <h2>Preview Your Submission</h2>
+    <div id="previewContent"></div>
+    <button id="finalSubmit">Submit Story</button>
+    <button id="closeModal" class="close-btn">Close</button>
+  </div>
+
+  
 </body>
 </html>
