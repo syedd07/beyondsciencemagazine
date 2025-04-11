@@ -295,7 +295,7 @@ verifyEmailBtn.addEventListener("click", async () => {
 
   try {
     const response = await fetch(
-      "http://n8n.beyondsciencemagazine.studio:8080/webhook/send-otp",
+      "https://n8n.beyondsciencemagazine.studio:8080/webhook/send-otp",
       {
         method: "POST",
         headers: {
@@ -361,7 +361,7 @@ verifyOtpBtn.addEventListener("click", async (e) => {
 
   try {
     const response = await fetch(
-      "http://n8n.beyondsciencemagazine.studio:8080/webhook/verify-otp",
+      "https://n8n.beyondsciencemagazine.studio:8080/webhook/verify-otp",
       {
         method: "POST",
         headers: {
