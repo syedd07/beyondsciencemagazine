@@ -2575,8 +2575,8 @@ input[type="file"] {
 /* image size fixed */
 /* Ensure all images in the grid have the same size */
 .posts .image img {
-  width: 100%; /* Ensures the image fills the container */
-  height: 300px; /* Set a fixed height for all images */
+  width: 600%; /* Ensures the image fills the container */
+  height: 200px; /* Set a fixed height for all images */
   object-fit: cover; /* Ensures the image is cropped to fit the container */
   border-radius: 8px; /* Optional: Add rounded corners */
 }
@@ -2592,13 +2592,17 @@ input[type="file"] {
   right: 10px; /* Align it to the right */
   font-size: 12px;
   color: #555;
-  background: rgba(255, 255, 255, 0.8); /* Optional: Add a subtle background */
+  /* background: rgba(255, 255, 255, 0.8); Optional: Add a subtle background */
   padding: 2px 5px;
   border-radius: 3px;
   z-index: 10;
   pointer-events: none; /* Prevent interaction with the word count */
 }
 
+/* Notyf Notifications */
+.notyf {
+  z-index: 3000 !important; /* Higher than #previewModal and #modalOverlay */
+}
 
 /* Preview Modal */
 
@@ -2613,7 +2617,7 @@ input[type="file"] {
   backdrop-filter: blur(4px);
   z-index: 1000;
   opacity: 0;
-  pointer-events: none;
+   pointer-events: none; 
   transition: opacity 0.4s ease-in-out;
 }
 
@@ -2755,8 +2759,8 @@ body.modal-open {
 /* Add these at the end of the file */
 
 /* Flip Container (applied on the preview modal) */
-#previewModal {
-    perspective: 1000px; /* enable 3D effect */
+/* #previewModal {
+    perspective: 1000px; 
 }
 .modal-flip {
     animation: flipAnimation 0.8s forwards;
@@ -2767,7 +2771,8 @@ body.modal-open {
 }
 
 /* Back side of the modal */
-.modal-back {
+
+/* .modal-back {
     transform: rotateY(180deg);
     text-align: center;
 }
@@ -2783,8 +2788,7 @@ body.modal-open {
 .modal-back p {
     font-size: 1em;
     margin-bottom: 20px;
-}
-
+}  */
 
 /* OTP Box styling */
 

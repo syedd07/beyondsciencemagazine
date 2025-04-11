@@ -10,13 +10,13 @@ const databases = new Databases(client);
 const storage = new Storage(client);
 const databaseId = "67efbe710015ee79508f";
 const collectionId = "67f16ece002b3f15acb3";
+let profilePicId = "";
+let uploadedImageURL = "";
+
 
 window.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("storyForm");
   if (!form) return;
-
-  let profilePicId = "";
-  let uploadedImageURL = "";
 
   const statusDiv = document.getElementById("fileUploadStatus");
 
@@ -111,75 +111,6 @@ window.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("modal-open");
   });
 
-  finalSubmit.addEventListener("click", async (e) => {
-    e.preventDefault();
-
-    const storyHTML = document.querySelector("#editor .ql-editor").innerHTML;
-
-    // Truncate the HTML content to 1200 characters
-    if (storyHTML.length > 150000) {
-      alert(
-        "Your story is too long. Please shorten it to fit within 1500 characters."
-      );
-      return;
-    }
-
-    document.getElementById("StoryContent").value =
-      document.querySelector("#editor .ql-editor").innerHTML;
-
-    const requiredFields = [
-      "FirstName",
-      "Email",
-      "Country",
-      "University",
-      "ShortBio",
-    ];
-    for (const id of requiredFields) {
-      if (!document.getElementById(id).value.trim()) {
-        alert("Please fill out all required fields.");
-        return;
-      }
-    }
-
-    if (!profilePicId) {
-      alert("Please upload a profile picture.");
-      return;
-    }
-
-    const data = {
-      firstName: document.getElementById("FirstName").value,
-      lastName: document.getElementById("LastName").value,
-      email: document.getElementById("Email").value,
-      country: document.getElementById("Country").value,
-      linkedIn: document.getElementById("linkedIn").value,
-      instagram: document.getElementById("Instagram").value,
-      twitter: document.getElementById("Twitter").value,
-      other: document.getElementById("Other").value,
-      shortBio: document.getElementById("ShortBio").value,
-      university: document.getElementById("University").value,
-      researchFields: Array.from(
-        document.querySelectorAll("#tags-wrapper span")
-      ).map((tag) => tag.textContent),
-      image_id: profilePicId,
-      story: document.getElementById("StoryContent").value,
-      articleTitle: document.getElementById("Title").value,
-    };
-
-    try {
-      await databases.createDocument(
-        databaseId,
-        collectionId,
-        ID.unique(),
-        data
-      );
-
-      // Redirect to the success page
-      window.location.href = "/user-uploads/success.html";
-    } catch (error) {
-      console.error("Document creation failed:", error);
-      alert("Something went wrong while submitting your story.");
-    }
-  });
 
   const closePreview = () => {
     previewModal.classList.remove("active");
@@ -341,6 +272,8 @@ verifyEmailBtn.addEventListener("click", async () => {
   }
 });
 
+let isOtpVerified = false; // Flag to track OTP verification
+
 verifyOtpBtn.addEventListener("click", async (e) => {
   e.preventDefault(); // Prevent default form submission
   const enteredOtp = Array.from(document.querySelectorAll("#otpInput .otp-box"))
@@ -389,6 +322,9 @@ verifyOtpBtn.addEventListener("click", async (e) => {
       verifyOtpBtn.disabled = true;
       verifyOtpBtn.style.cursor = "not-allowed";
       verifyOtpBtn.style.backgroundColor = "#ccc"; // Optional: Change button color
+
+      isOtpVerified = true; // Set OTP verification flag to true
+
     } else {
       messageDiv.textContent = result.message || "Incorrect OTP.";
       messageDiv.style.color = "red";
@@ -396,5 +332,98 @@ verifyOtpBtn.addEventListener("click", async (e) => {
   } catch (err) {
     messageDiv.textContent = "Error: " + err.message;
     messageDiv.style.color = "red";
+  }
+});
+
+
+// Initialize Notyf
+const notyf = new Notyf({
+  duration: 5000, // Notification duration in milliseconds
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  dismissible: true, // Allow dismissing notifications
+});
+
+// Ensure Notyf notifications are above the modal
+document.querySelector('.notyf').style.zIndex = '3000';
+
+// Prevent form submission if OTP is not verified and other required fields are not filled
+finalSubmit.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  // Check if OTP is verified
+  if (!isOtpVerified) {
+    notyf.error("Please verify your OTP before submitting the form.");
+    return;
+  }
+
+  // Check if the story content is too long
+  const storyHTML = document.querySelector("#editor .ql-editor").innerHTML;
+  if (storyHTML.length > 150000) {
+    notyf.error(
+      "Your story is too long. Please shorten it to fit within 1500 characters."
+    );
+    return;
+  }
+
+  // Check if required fields are filled
+  const requiredFields = [
+    "FirstName",
+    "Email",
+    "Country",
+    "University",
+    "ShortBio",
+  ];
+  for (const id of requiredFields) {
+    if (!document.getElementById(id).value.trim()) {
+      notyf.error("Please fill out all required fields.");
+      return;
+    }
+  }
+
+  // Check if profile picture is uploaded
+  if (!profilePicId) {
+    notyf.error("Please upload a profile picture.");
+    return;
+  }
+
+  // Prepare the data for submission
+  const data = {
+    firstName: document.getElementById("FirstName").value,
+    lastName: document.getElementById("LastName").value,
+    email: document.getElementById("Email").value,
+    country: document.getElementById("Country").value,
+    linkedIn: document.getElementById("linkedIn").value,
+    instagram: document.getElementById("Instagram").value,
+    twitter: document.getElementById("Twitter").value,
+    other: document.getElementById("Other").value,
+    shortBio: document.getElementById("ShortBio").value,
+    university: document.getElementById("University").value,
+    researchFields: Array.from(
+      document.querySelectorAll("#tags-wrapper span")
+    ).map((tag) => tag.textContent),
+    image_id: profilePicId,
+    story: document.getElementById("StoryContent").value,
+    articleTitle: document.getElementById("Title").value,
+  };
+
+  try {
+    // Submit the data to the database
+    await databases.createDocument(
+      databaseId,
+      collectionId,
+      ID.unique(),
+      data
+    );
+
+    notyf.success("Your story has been submitted successfully!");
+
+    // Redirect to the success page
+    window.location.href = "/user-uploads/success.html";
+  } catch (error) {
+    console.error("Document creation failed:", error);
+    notyf.error("Something went wrong while submitting your story.");
   }
 });
