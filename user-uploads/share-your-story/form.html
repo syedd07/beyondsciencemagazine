@@ -44,22 +44,20 @@
                                         <li><a href="https://youtube.com/@beyondsciencemagazine?si=4m1E5WEC347F4aZE" class="icon brands fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
                                     </ul>
                             </header>
-                <!-- Banner -->
-                <section id="banner">
-                    <div class="content">
-                        <header>
-                            <h1 style="margin-bottom: 0;">Share Your Story with us!</h1>
-                            <small style="display: block; margin-top: 0;"><i>share your research journey to get featured in BEYOND SC!ENCE MAGAZINE!</i></small>
-                        </header>
-                            <br>
-                            <br>
-                            
-                            <h3>
-                                Fill out the form below to share your story with us. We will review your submission and get back to you if we think it fits our magazine's theme and style. 
-                            </h3>
-                            <br>
-
-                            <form id="storyForm">
+                            <!-- Banner -->
+                             <section id="banner">
+                                <div class="content">
+                                    <header>
+                                        <h1 style="margin-bottom: 0;">Share Your Story with us!</h1>
+                                        <small style="display: block; margin-top: 0;"><i>share your research journey to get featured in BEYOND SC!ENCE MAGAZINE!</i></small>
+                                    </header>
+                                    <br>
+                                    <br>
+                                    <h3>
+                                        Fill out the form below to share your story with us. We will review your submission and get back to you if we think it fits our magazine's theme and style. 
+                                    </h3>
+                                    <br>
+                                    <form id="storyForm">
                                 <h4 style="margin-bottom: 30px;">Personal Details</h4>
                                 <label for="firstName" style="display: inline-block; vertical-align: top;">First Name</label><span style="color: red !important; display: inline; float: none;"> *</span>
                                 <input type="text" id="FirstName" placeholder="Enter Your First Name" name="FirstName" required>
@@ -90,18 +88,25 @@
                                   </div>
                                   
                                   <!-- OTP Input Section (hidden by default) -->
-                                  <div id="otpSection" style="display: none; margin-top: 10px;">
-                                    <input type="text" id="otpInput" placeholder="Enter OTP" style="width: 150px;">
-                                    <br>
-                                    <button id="verifyOtpBtn">Verify OTP</button>
+                                   
+                                  <div id="otpSection" style="display: none; margin-top: 20px;">
+                                     <label style="display: inline-block; vertical-align: top; margin-bottom: 10px;">Enter OTP: </label>
+                                     <span style="color: red !important; display: inline; float: none;"> *</span><br>
+                                     <div id="otpInput" class="otp-container">
+                                        <input class="otp-box" type="text" maxlength="1" placeholder="-" />
+                                        <input class="otp-box" type="text" maxlength="1" placeholder="-" />
+                                        <input class="otp-box" type="text" maxlength="1" placeholder="-" />
+                                        <input class="otp-box" type="text" maxlength="1" placeholder="-" />
+                                        <input class="otp-box" type="text" maxlength="1" placeholder="-" />
+                                        <input class="otp-box" type="text" maxlength="1" placeholder="-" />
+                                      </div>
+                                      <br>
+                                    <button id="verifyOtpBtn" type="button">Verify OTP</button>
                                   </div>
+                                
+
+                                  <div id="otp-message" style="margin-top: 8px; font-size: 14px;"></div>
                                   
-                                  <!-- Email Verified Message -->
-                                  <div id="emailVerifiedMsg" style="color: green; font-size: 14px; display: none; margin-top: 8px;">
-                                    ✔ Email Verified
-                                  </div>
-                                  
-                                <br>
                                 <br>
                                 <label for="country" style="display: inline-block; vertical-align: top;">Country</label><span style="color: red !important; display: inline; float: none;   "> *</span>
                                 <input type="text" id="Country" placeholder="Enter Your Country" name="Country" required>
@@ -151,9 +156,13 @@
                                 
                                 <label for="profilePic" style="display: inline-block; vertical-align: top;">Picture</label>
                                 <span style="color: red !important;"> *</span><br>
-                                <label for="profilePic" id="uploadLabel" class="button"><em>Upload a Picture</em></label>
+
+                                <label for="profilePic" id="uploadLabel" class="button">
+                                    <em>Upload a Picture</em>
+                                </label>
+
                                 <input type="file" id="profilePic" name="profilePic" accept="image/*" required ><br>
-                                <div id="fileUploadStatus" style="margin-top: 5px;"></div>
+                                <div id="fileUploadStatus" style="margin-top: 5px; display: block;"></div>
 
                                 <hr>
 
@@ -225,14 +234,19 @@
                                 <label for="story" style="display: inline-block; vertical-align: top;">Your Story/ Journey</label> 
                                 <span style="color: red !important;"> *</span>
                                 <br>
-                                <div style="padding: 0 10px;">
+                                <div style="position: relative;">
                                     <div id="editor" style="height: 300px; background-color: white; border: 1px solid #ccc;"></div>
-                                <input type="hidden" name="StoryContent" id="StoryContent">
+                                    <div id="wordCount" >Word Count: 0</div>
+                                    <input type="hidden" name="StoryContent" id="StoryContent">
                                 </div>
                                 <br>
-                                <div id="wordCount" style="margin-top: 10px; font-size: 14px; color: #555;">Word Count: 0</div>
+                                
                                 <button type="button" id="previewBtn" style="margin-top: 10px;">Preview</button> <!-- important -->
                             </form>
+                            <p>
+                                Trouble submitting the form? 
+                                <a href="mailto:admin@beyondsciencemagazine.studio">Contact here</a>
+                            </p>
                             
                             
                             <!-- Appwrite SDK -->
@@ -258,37 +272,39 @@
                             // Initialize Quill editor
                              var quill = new Quill('#editor', {
                                 theme: 'snow',
-                                placeholder: 'Write your story here or paste here... max words: 1200',
+                                placeholder: 'Write your story here or paste here... max words: 1500',
                                 modules: {
                                     toolbar: [
                                         [{ 'font': ['times-new-roman', 'serif', 'sans-serif'] }, { 'size': [] }],
-                                        ['bold', 'italic', 'underline', 'strike'],
+                                        ['bold', 'italic', 'underline', 'link', 'strike'],
                                         [{ 'script': 'sub'}, { 'script': 'super' }],
-                                        [{ 'header': [1, 2, 3, false] }],
+                                        // [{ 'header': [1, 2, 3, false] }],
                                         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                                         [{ 'indent': '-1'}, { 'indent': '+1' }],
                                         [{ 'direction': 'rtl' }],
                                         [{ 'align': [] }],
                                         [{ 'color': [] }, { 'background': [] }],
                                         ['blockquote', 'code-block'],
-                                        ['link', 'image', 'video'],
                                         ['clean']
                                     ]
                                 }
                             });
                             // Set default font
                               quill.format('font', 'times-new-roman');
+
+
                               // Add word count element dynamically
                                const editorContainer = document.querySelector('#editor');
                                const wordCountDiv = document.getElementById('wordCount');
                                quill.on('text-change', function () {
+
                                 const text = quill.getText().trim(); // Get plain text
                                 const html = quill.root.innerHTML; // Get HTML content
                                 const wordCount = text.length > 0 ? text.split(/\s+/).length : 0;
                                 const charCount = html.length;
-                                wordCountDiv.textContent = `Word Count: ${wordCount}, Character Count: ${charCount}/1200`;
+                                wordCountDiv.textContent = `Word Count: ${wordCount}/1500`;
 
-                                if (charCount > 1200) {
+                                if (charCount > 15000) {
 
                                     wordCountDiv.style.color = 'red';
                                 } else {
@@ -313,5 +329,110 @@
                                         <button id="finalSubmit">Submit Story</button>
                                         <button id="closeModal" class="close-btn">Close</button>
                                     </div>
-                                </body>
-                                </html>
+                                </div>
+                            </div>
+                        </div>
+                        
+                
+                <!-- Sidebar -->
+                <div id="sidebar">
+                    <div class="inner">
+                        <!-- Search -->
+                        <section id="search" class="alt">
+                            <form id="searchForm" method="post" action="#">
+                                <input type="text" name="query" id="query" placeholder="Search" />
+                                <br>
+                                <button type="submit">Search</button>
+                            </form>
+                        </section>
+
+                        <!-- Menu -->
+                        <nav id="menu">
+                            <header class="major">
+                                <h2>Menu</h2>
+                            </header>
+                            <ul>
+                                <li><a href="/index.html">Homepage</a></li>
+                                <li><a href="/articles/about.html">About</a></li>
+                                <li><a href="/articles/article.html">Articles</a></li>
+                                <li><a href="/user-uploads/articles/list.html">Articles by users</a></li>
+                                <li><a href="/user-uploads/share-your-story/form.html">Share your Story</a></li>
+                                <li><a href="/books.html">Books</a></li>
+                                <li><a href="/e-books.html">E-books</a></li>
+                                <li><a href="/articles/contact.html">Contact us</a></li>
+                                
+                                <li><a href="nl.html">Newsletter</a></li>
+                                <li><a href="current.html">Current issue</a></li>
+                                <li>
+                                    <span class="opener">other</span>
+                                    <ul>
+                                        <li><a href="articles/privacy.html">Privacy Policy</a></li>
+                                        <li><a href="#">Multimedia</a></li>
+                                        
+        
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <!-- Section -->
+                        <section>
+                            <header class="major">
+                                <h2>Latest News</h2>
+                            </header>
+                            <div class="mini-posts">
+                                <article>
+                                    
+                                    <p>
+                                        NIH researchers identify promising Lead for treating degenerative eye disorders.
+                                    </p>
+                                </article>
+                                <article>
+                                    <p> Chinese scientists create high-efficiency thermoelectric plastics.</p>
+                                </article>
+                                <article>
+                                    <p>
+                                        New study reveals how global warming's impact on rainfall patterns.
+                                    </p>
+                                </article>
+        
+                                
+                            </div>
+                            <ul class="actions">
+                                <li><a href="articles/article.html" class="button">Read Our features</a></li>
+                            </ul>
+                        </section>
+                        <!-- Section -->
+                         <section>
+                            <header class="major">
+                                 <h2>Get in touch</h2>
+                                </header>
+                                <p>
+                                    We'd love to hear from you! Whether you have questions, suggestions, or want to collaborate, feel free to reach out. Together, we can bridge the gap between science and the public.
+                                </p>
+                                <ul class="contact">
+                                    <li class="icon solid fa-envelope"><a href="mailto:admin@beyondsciencemagazine.studio">admin@beyondsciencemagazine.studio</a></li>
+                                    <li class="icon solid fa-phone">(+91 7411666573)</li>
+                                    <li class="icon solid fa-home">Whitefield Bengaluru
+                                        <br /> Karnataka,560067
+                                    </li>
+                                </ul>
+                            </section>
+                            <!-- Footer -->
+                             <footer id="footer">
+                                <p class="copyright">&copy; 2025. All rights reserved. <a href="https://beyondsciencemagazine.studio">Beyond</a>.
+                                    <br> Design & Managed by: <a href="https://sydali.me" target="_blank">Syed Ali</a>.</p>
+                                </footer>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scripts -->
+            <script src="/user-uploads/main.js"></script>
+            <script src="/assets/js/jquery.min.js"></script>
+            <script src="/assets/js/browser.min.js"></script>
+            <script src="/assets/js/breakpoints.min.js"></script>
+            <script src="/assets/js/util.js"></script>
+            <script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -4,6 +4,8 @@
   "description": "A magazine about science and technology.",
   "author": "Syed Yousuf Ali",
   "dependencies": {
+    "appwrite": "^17.0.1",
+    "dotenv": "^16.4.7",
     "prettier": "^3.5.3"
   }
 }

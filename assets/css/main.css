@@ -2491,13 +2491,51 @@ input[type="file"] {
   min-height: 48px; /* increases overall toolbar height */
   
 }
+
+/* Quill.js Toolbar - Button Groups */
 .ql-toolbar .ql-formats {
-  margin-right: 10px; /* space between button groups */
+  display: flex;
+  gap: 8px; /* Space between button groups */
+  margin-right: 10px;
 }
 
+/* Quill.js Toolbar - Responsive Styles for Small Screens */
+@media (max-width: 600px) {
+  .ql-toolbar {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent buttons from stacking */
+    padding: 10px !important;
+    box-sizing: border-box;
+  }
+
+  .ql-toolbar .ql-formats {
+    display: inline-flex; /* Keep button groups inline */
+    gap: 6px; /* Adjust spacing for small screens */
+    margin-right: 8px;
+  }
+
+  .ql-toolbar button,
+  .ql-toolbar .ql-picker {
+    margin-right: 6px;
+  }
+
+  .ql-editor {
+    font-size: 15px; /* Adjust font size for better readability */
+  }
+}
+
+/* Editor Container */
+#editor {
+  max-height: 400px;
+  overflow-y: auto;
+  resize: vertical; /* Optional: Allow manual resizing */
+}
+
+/* Quill.js Toolbar - Buttons and Pickers */
 .ql-toolbar button,
 .ql-toolbar .ql-picker {
-  margin-right: 6px !important; /* space between individual buttons */
+  margin-right: 6px !important; /* Space between individual buttons */
 }
 
 /* Custom font name display */
@@ -2513,35 +2551,7 @@ input[type="file"] {
   font-size: 14px;
 }
 
-/* Quill.js enhance for Mobile Divices */
 
-@media (max-width: 600px) {
-  .ql-toolbar {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 10px !important;
-    box-sizing: border-box;
-  }
-
-  .ql-toolbar .ql-formats {
-    display: inline-block;
-    margin-right: 8px;
-  }
-
-  .ql-toolbar button,
-  .ql-toolbar .ql-picker {
-    margin-right: 6px;
-  }
-
-  .ql-editor {
-    font-size: 15px;
-  }
-}
-#editor {
-  max-height: 400px;
-  overflow-y: auto;
-  resize: vertical; /* optional: lets user resize manually */
-}
 
 .ql-toolbar {
   padding: 8px 10px !important;
@@ -2555,18 +2565,18 @@ input[type="file"] {
 }
 
 /* Responsive for small screens */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .ql-toolbar {
     flex-direction: column;
     align-items: flex-start;
   }
-}
+} */
 
 /* image size fixed */
 /* Ensure all images in the grid have the same size */
 .posts .image img {
   width: 100%; /* Ensures the image fills the container */
-  height: 280px; /* Set a fixed height for all images */
+  height: 300px; /* Set a fixed height for all images */
   object-fit: cover; /* Ensures the image is cropped to fit the container */
   border-radius: 8px; /* Optional: Add rounded corners */
 }
@@ -2577,9 +2587,9 @@ input[type="file"] {
 }
 
 #wordCount {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+  position: absolute; /* Position it relative to the editor container */
+  bottom: 10px; /* Place it at the bottom of the editor */
+  right: 10px; /* Align it to the right */
   font-size: 12px;
   color: #555;
   background: rgba(255, 255, 255, 0.8); /* Optional: Add a subtle background */
@@ -2775,4 +2785,42 @@ body.modal-open {
     margin-bottom: 20px;
 }
 
+
+/* OTP Box styling */
+
+#otpInput {
+  display: flex;
+  gap: 10px;
+}
+
+#otpInput .otp-box {
+  all: unset; /* Reset all styles */
+  width: 40px !important; /* Ensure the width is applied */
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+  font-size: small;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  background-color: #fff;
+  /* color: #000 !important; Ensure input text is visible */
+  box-sizing: border-box;
+  caret-color: black !important; /* Ensure caret (blinking cursor) is visible */
+  font-family: monospace;
+}
+
+#otpInput .otp-box::placeholder {
+  color: #888 !important; /* Ensure placeholder text is visible */
+  opacity: 1;
+}
+
+#otpInput .otp-box:focus::placeholder {
+  color: transparent; /* Hide placeholder on focus */
+}
+
+#otpInput .otp-box:focus {
+  border-color: #f56a6a; /* Optional: Highlight border on focus */
+  box-shadow: 0 0 5px rgba(245, 106, 106, 0.5); /* Optional: Add focus effect */
+}
 
