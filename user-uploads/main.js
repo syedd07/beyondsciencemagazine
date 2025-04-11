@@ -377,6 +377,18 @@ verifyOtpBtn.addEventListener("click", async (e) => {
     if (result.success) {
       messageDiv.textContent = "Email verified! Continue with your form submission.";
       messageDiv.style.color = "green";
+    
+      // Disable OTP input boxes
+      otpBoxes.forEach((box) => {
+        box.disabled = true; // Disable the input box
+        box.style.cursor = "not-allowed"; // Change cursor to indicate it's not editable
+        box.style.backgroundColor = "#f5f5f5"; // Optional: Change background color for visual feedback
+      });
+    
+      // Optionally disable the Verify OTP button
+      verifyOtpBtn.disabled = true;
+      verifyOtpBtn.style.cursor = "not-allowed";
+      verifyOtpBtn.style.backgroundColor = "#ccc"; // Optional: Change button color
     } else {
       messageDiv.textContent = result.message || "Incorrect OTP.";
       messageDiv.style.color = "red";
