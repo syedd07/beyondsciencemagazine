@@ -1,0 +1,16 @@
+{
+    "name": "send-appr-email",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "appwrite": "^10.1.0",
+      "dotenv": "^16.3.1",
+      "node-appwrite": "^15.0.1",
+      "nodemailer": "^6.9.3",
+      "prettier": "^3.5.3"
+    }
+  }
