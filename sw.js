@@ -32,13 +32,21 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+  // Skip caching for API endpoints, especially authentication
+  if (event.request.url.includes('webhook') || 
+      event.request.url.includes('verify-otp') ||
+      event.request.url.includes('n8n.beyondscience')) {
+    return event.respondWith(fetch(event.request));
+  }
+
+  // Keep caching for other resources
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
         if (response) {
-          return response;  
+          return response;
         }
-        return fetch(event.request);  
+        return fetch(event.request);
       })
   );
 });

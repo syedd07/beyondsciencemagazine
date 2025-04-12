@@ -2574,12 +2574,12 @@ input[type="file"] {
 
 /* image size fixed */
 /* Ensure all images in the grid have the same size */
-.posts .image img {
-  width: 600%; /* Ensures the image fills the container */
-  height: 200px; /* Set a fixed height for all images */
-  object-fit: cover; /* Ensures the image is cropped to fit the container */
-  border-radius: 8px; /* Optional: Add rounded corners */
-}
+/* .posts .image img {
+  width: 600%; 
+  height: 200px; 
+  object-fit: cover; 
+  border-radius: 8px;
+} */
 
 /* Word count inside the Quill editor */
 #editor-container {

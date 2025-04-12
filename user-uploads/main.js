@@ -193,7 +193,18 @@ otpBoxes.forEach((box, index) => {
   });
 });
 
+// Initialize Notyf
+const notyf = new Notyf({
+  duration: 5000, // Notification duration in milliseconds
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  dismissible: true, // Allow dismissing notifications
+});
 
+// Ensure Notyf notifications are above the modal
+document.querySelector('.notyf').style.zIndex = '3000';
 
 // Generate OTP
 
@@ -239,10 +250,12 @@ verifyEmailBtn.addEventListener("click", async () => {
       }
     );
 
+
     // Ensure the response is OK
     if (!response.ok) {
       messageDiv.textContent = "Failed to send OTP.";
       messageDiv.style.color = "red";
+      notyf.error("Failed to send OTP. Please try again.");
       return;
     }
 
@@ -262,9 +275,11 @@ verifyEmailBtn.addEventListener("click", async () => {
       messageDiv.textContent = "OTP sent to your email.";
       messageDiv.style.color = "green";
       otpSection.style.display = "block"; // Show OTP section
+      notyf.success("OTP sent to your email. Please check your inbox.");
     } else {
       messageDiv.textContent = "Failed to send OTP.";
       messageDiv.style.color = "red";
+      notyf.error("Failed to send OTP. Please try again.");
     }
   } catch (err) {
     messageDiv.textContent = "Error: " + err.message;
@@ -286,6 +301,7 @@ verifyOtpBtn.addEventListener("click", async (e) => {
   if (!enteredOtp || !email) {
     messageDiv.textContent = "Please fill both email and OTP.";
     messageDiv.style.color = "red";
+    notyf.error("Please fill both email and OTP.");
     return;
   }
 
@@ -293,23 +309,29 @@ verifyOtpBtn.addEventListener("click", async (e) => {
   messageDiv.style.color = "black";
 
   try {
-    const response = await fetch(
-      "https://n8n.beyondsciencemagazine.studio/webhook/verify-otp",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, otp: enteredOtp }),
-      }
-    );
+  const response = await fetch(
+    "https://n8n.beyondsciencemagazine.studio/webhook/verify-otp",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, otp: enteredOtp }),
+    }
+  );
 
-    const result = await response.json();
-    console.log("OTP Verify Result:", result);
+  // Get the raw text first
+  const responseText = await response.text();
+  console.log("Raw response:", responseText);
+  
+  // Then parse it as JSON
+  const result = JSON.parse(responseText);
+  console.log("OTP Verify Result:", result);
 
-    if (result.success) {
+  if (result.success === true || result.success === 'true') {
       messageDiv.textContent = "Email verified! Continue with your form submission.";
       messageDiv.style.color = "green";
+      notyf.success("Email verified! You can now submit your story.");
     
       // Disable OTP input boxes
       otpBoxes.forEach((box) => {
@@ -328,26 +350,20 @@ verifyOtpBtn.addEventListener("click", async (e) => {
     } else {
       messageDiv.textContent = result.message || "Incorrect OTP.";
       messageDiv.style.color = "red";
+      notyf.error(result.message || "Incorrect OTP. Please try again.");
+
     }
   } catch (err) {
     messageDiv.textContent = "Error: " + err.message;
     messageDiv.style.color = "red";
+    notyf.error(err.message || "An error occurred while verifying OTP.");
   }
 });
 
 
-// Initialize Notyf
-const notyf = new Notyf({
-  duration: 5000, // Notification duration in milliseconds
-  position: {
-    x: 'right',
-    y: 'top',
-  },
-  dismissible: true, // Allow dismissing notifications
-});
 
-// Ensure Notyf notifications are above the modal
-document.querySelector('.notyf').style.zIndex = '3000';
+
+
 
 // Prevent form submission if OTP is not verified and other required fields are not filled
 finalSubmit.addEventListener("click", async (e) => {

@@ -33,7 +33,9 @@ async function fetchArticles() {
         const articleCard = document.createElement('article');
         articleCard.innerHTML = `
           <a href="/user-uploads/articles/view.html?articleID=${article.$id}" class="image">
+          <div style="position: relative; width: 100%; height: 250px; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-tems: center;  ">
           <img src="${imageUrl}" alt="${article.firstName} ${article.lastName}">
+          </div>
           </a>
           <h3>${article.firstName} ${article.lastName}</h3>
           <p>${article.shortBio || 'No description available.'}</p>
