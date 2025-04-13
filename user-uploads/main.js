@@ -417,6 +417,7 @@ finalSubmit.addEventListener("click", async (e) => {
     other: document.getElementById("Other").value,
     shortBio: document.getElementById("ShortBio").value,
     university: document.getElementById("University").value,
+    isEmailVerified: isOtpVerified,
     researchFields: Array.from(
       document.querySelectorAll("#tags-wrapper span")
     ).map((tag) => tag.textContent),
@@ -443,3 +444,5 @@ finalSubmit.addEventListener("click", async (e) => {
     notyf.error("Something went wrong while submitting your story.");
   }
 });
+
+

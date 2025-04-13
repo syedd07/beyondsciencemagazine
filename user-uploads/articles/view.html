@@ -2,11 +2,14 @@
 <html>
 <head>
     <title>Loading Article...</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="description" content="Explore articles shared by researchers and PhD students." />
     <meta name="keywords" content="Beyond Science, Articles, Research, Stories" />
     <link rel="stylesheet" href="/assets/css/main.css" />
+    
     <!-- Fav icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/articles/images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/articles/images/favicon_io/favicon-32x32.png">
@@ -45,8 +48,16 @@
 
                     <hr>
                     <p id="article-content">Please wait while we load the article...</p>
+                     
                 </section>
 
+                <div id="article-metrics" style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Animated heart as the like button -->
+                    <!-- <div class="heart" id="like-button"></div> -->
+                    <!-- Like count positioned next to the heart -->
+                    <!-- <span id="like-count">0</span> -->
+                  </div>
+                  
                 <hr class="major" />
                 
 
@@ -156,7 +167,7 @@
     <!-- Appwrite SDK -->
     <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
     <script src="/user-uploads/articles/view.js"></script>
-    <script src="/assets/js/jquery.min.js"></script>
+    
     <script src="/assets/js/browser.min.js"></script>
     <script src="/assets/js/breakpoints.min.js"></script>
     <script src="/assets/js/util.js"></script>

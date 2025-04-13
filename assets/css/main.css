@@ -2828,3 +2828,28 @@ body.modal-open {
   box-shadow: 0 0 5px rgba(245, 106, 106, 0.5); /* Optional: Add focus effect */
 }
 
+/* like btn animation */
+
+.heart {
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+  background-position: left top;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  margin-bottom: 0%;
+  padding-bottom: 0%;
+  
+  /* Scale the heart down to 50% of its size */
+  transform: scale(0.6);
+  transform-origin:  center left top ;
+}
+
+.heart.is-active {
+  transition-duration: 1s;
+  background-position: -2800px 0;
+}
+
+
+
