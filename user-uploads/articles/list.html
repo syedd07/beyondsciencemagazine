@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Articles by Users</title>
     <meta name="title" content="BEYOND SC!ENCE Magazine - Explore the Stories Behind the Science" />
     <meta charset="utf-8" />
@@ -16,7 +17,8 @@
      <link rel="icon" type="image/png" sizes="512x512" href="/articles/images/favicon_io/android-chrome-512x512.png">
      <link rel="manifest" href="/articles/site.webmanifest">
 
-
+     
+    
 </head>
 <body class="is-preload">
     <!-- Wrapper -->
@@ -48,9 +50,26 @@
                 <!-- Articles Section -->
                 <section>
                     <header class="major">
-                        <h2 style="margin-bottom: 0;">Recent Articles</h2>
-                        <small style="display: block; margin-top: 0;"><i>All articles are shared by users.</i></small>
+                        <h2 style="margin-bottom: 0px; margin-top: 20px;">Recent Articles</h2>
+                        <small style="display: block; margin-top: 0; margin-bottom: 10px;"><i>All articles are shared by users.</i></small>
+                        <br>
+                        <!-- Sort Bar -->
+                        <div class="sort-controls">
+                            <label for="sort-select">Sort by:</label>
+                            <div class="select-wrapper">
+                                <i id="sort-icon" class="fas fa-fire"></i>
+                                <select id="sort-select" class="sort-dropdown">
+                                    <option value="trending">Trending</option>
+                                    <option value="newest">Newest First</option>
+                                    <option value="oldest">Oldest First</option>
+                                    <option value="most-viewed">Most Viewed</option>
+                                    <option value="most-liked">Most Liked</option>
+                                    <option value="alphabetical">Alphabetical (A-Z)</option>
+                                </select>
+                            </div>
+                        </div>
                     </header>
+                    <br  />
                     <div class="posts" id="articles-grid">
                         <!-- Articles will be dynamically loaded here -->
                     </div>

@@ -1,6 +1,4 @@
-//// javascript
-// filepath: d:\Ali\beyond Science\beyondsciencemagazine\user-uploads\articles\view.js
-
+(function() {
 const { Client, Databases } = Appwrite;
 
 // Initialize Appwrite Client
@@ -24,17 +22,16 @@ const articleImage = document.getElementById("article-image");
 const articleContent = document.getElementById("article-content");
 const authorDetails = document.getElementById("author-details");
 
-
 //  helper function for getting user likes from localStorage
 function getUserLikes() {
-    const likes = localStorage.getItem('userLikes');
-    return likes ? JSON.parse(likes) : {};
-  }
+  const likes = localStorage.getItem("userLikes");
+  return likes ? JSON.parse(likes) : {};
+}
 // helper function to get user views from localStorage
-  function getUserViews() {
-    const views = localStorage.getItem('userViews');
-    return views ? JSON.parse(views) : {};
-  }
+function getUserViews() {
+  const views = localStorage.getItem("userViews");
+  return views ? JSON.parse(views) : {};
+}
 
 // Helper function to format time as "1d ago", "1hr ago", etc.
 function timeAgo(date) {
@@ -62,35 +59,38 @@ function timeAgo(date) {
 
 // Fetch and Render Article
 async function fetchArticle() {
-  console.log("Fetching article...");
-  console.log("Article ID:", articleID);
+ // console.log("Fetching article...");
+ // console.log("Article ID:", articleID);
 
   if (!articleID) {
+   // console.error("No article ID found in URL");
     articleTitle.textContent = "Error: No Article Found";
     articleContent.textContent = "The requested article does not exist.";
     return;
   }
 
   try {
+   // console.log("Attempting to fetch article with ID:", articleID);
+
     // 1. Fetch the existing document
     const article = await databases.getDocument(
       databaseId,
       collectionId,
       articleID
     );
-    console.log("Fetched Article:", article);
+   // console.log("Successfully fetched article:", article);
 
     // 2. Check if user has viewed this article within the last 24 hours
     const userViews = getUserViews();
     const lastViewTime = userViews[articleID] || 0;
     const viewExpired = Date.now() - lastViewTime > 24 * 60 * 60 * 1000; // 24 hours
-    
+
     // Only increment views if this is a new view or the previous view has expired
     if (!lastViewTime || viewExpired) {
       // Store this view with timestamp
       userViews[articleID] = Date.now();
-      localStorage.setItem('userViews', JSON.stringify(userViews));
-      
+      localStorage.setItem("userViews", JSON.stringify(userViews));
+
       // Increment view in database
       const updatedViews = (article.views || 0) + 1;
       await databases.updateDocument(databaseId, collectionId, articleID, {
@@ -148,57 +148,57 @@ async function fetchArticle() {
     `;
 
     // Handle "Like" button
-$(function () {
-  // Check if user already liked this article
-  const userLikes = getUserLikes();
-  const hasLiked = userLikes[articleID] === true;
-  
-  // Set initial UI state
-  if (hasLiked) {
-    $("#like-button").addClass("is-active");
-  }
+    $(function () {
+      // Check if user already liked this article
+      const userLikes = getUserLikes();
+      const hasLiked = userLikes[articleID] === true;
 
-  $("#like-button").on("click", async function () {
-    if (!articleID) return;
-    
-    // Toggle like status in localStorage
-    const userLikes = getUserLikes();
-    const isNowLiked = !userLikes[articleID];
-    userLikes[articleID] = isNowLiked;
-    localStorage.setItem('userLikes', JSON.stringify(userLikes));
-    
-    // Toggle UI feedback
-    $(this).toggleClass("is-active");
-    
-    try {
-      // Fetch current document
-      const doc = await databases.getDocument(
-        databaseId,
-        collectionId,
-        articleID
-      );
-      
-      // Increment or decrement likes based on action
-      const updatedLikes = isNowLiked 
-        ? (doc.likes || 0) + 1  // like
-        : Math.max(0, (doc.likes || 0) - 1);  // unlike (prevent negative)
-      
-      // Update the document with required fields
-      await databases.updateDocument(databaseId, collectionId, articleID, {
-        likes: updatedLikes,
-        isEmailVerified: doc.isEmailVerified,
+      // Set initial UI state
+      if (hasLiked) {
+        $("#like-button").addClass("is-active");
+      }
+
+      $("#like-button").on("click", async function () {
+        if (!articleID) return;
+
+        // Toggle like status in localStorage
+        const userLikes = getUserLikes();
+        const isNowLiked = !userLikes[articleID];
+        userLikes[articleID] = isNowLiked;
+        localStorage.setItem("userLikes", JSON.stringify(userLikes));
+
+        // Toggle UI feedback
+        $(this).toggleClass("is-active");
+
+        try {
+          // Fetch current document
+          const doc = await databases.getDocument(
+            databaseId,
+            collectionId,
+            articleID
+          );
+
+          // Increment or decrement likes based on action
+          const updatedLikes = isNowLiked
+            ? (doc.likes || 0) + 1 // like
+            : Math.max(0, (doc.likes || 0) - 1); // unlike (prevent negative)
+
+          // Update the document with required fields
+          await databases.updateDocument(databaseId, collectionId, articleID, {
+            likes: updatedLikes,
+            isEmailVerified: doc.isEmailVerified,
+          });
+
+          // Update displayed like count
+          $("#like-count").text(updatedLikes);
+        } catch (err) {
+          console.error("Failed to update likes:", err);
+          // Revert local storage on error
+          userLikes[articleID] = !isNowLiked;
+          localStorage.setItem("userLikes", JSON.stringify(userLikes));
+        }
       });
-      
-      // Update displayed like count
-      $("#like-count").text(updatedLikes);
-    } catch (err) {
-      console.error("Failed to update likes:", err);
-      // Revert local storage on error
-      userLikes[articleID] = !isNowLiked;
-      localStorage.setItem('userLikes', JSON.stringify(userLikes));
-    }
-  });
-});
+    });
 
     const tags = (updatedArticle.researchFields || [])
       .map((tag) => `<span class="tag">${tag}</span>`)
@@ -210,11 +210,13 @@ $(function () {
     <div class="author-info">
       <i class="fas fa-user-circle fa-2x"></i>
       <span>${updatedArticle.firstName} ${updatedArticle.lastName}</span>
-      ${updatedArticle.isEmailVerified ? 
-        `<i class="fas fa-check-circle tooltip-badge" style="color: #1DA1F2; margin-left: 5px; font-size: 1.2em; position: relative; cursor: help;">
-           <span class="custom-tooltip">Author email is verified!</span>
-         </i>` 
-        : ''}
+      ${
+        updatedArticle.isEmailVerified
+          ? `<i class="fas fa-check-circle tooltip-badge" style="color: #1DA1F2; margin-left: 2px; font-size: 1.2em; position: relative; cursor: help;">
+           <span class="custom-tooltip">Author's email is verified!</span>
+         </i>`
+          : ""
+      }
     </div>
     <br>
     <div class="created-time" style="margin-bottom: 0px;">
@@ -224,13 +226,13 @@ $(function () {
     <i class="fa fa-eye"></i> Views: ${updatedArticle.views || "Unable to fetch"}
     </div>
       <div style="display: flex;  position: relative; margin-left: 0;">
-        <div class="heart" id="like-button" style="margin-left: -40px; margin-top: -10px padding: 0;"></div>
+        <div class="heart" id="like-button" style="margin-left: -40px; margin-top: -20px padding: 0;"></div>
         <span id="like-count" style="position: absolute; left: 28px; top: 39px; font-weight: bold; font-size: 1em; text-decoration: underline;">${updatedArticle.likes || "0"}</span>
       </div>
     
   `;
-  const style = document.createElement('style');
-style.textContent = `
+    const style = document.createElement("style");
+    style.textContent = `
   .tooltip-badge {
     position: relative;
   }
@@ -269,10 +271,29 @@ style.textContent = `
     visibility: visible;
     opacity: 1;
   }
-`;
-document.head.appendChild(style);
+  `;
+    document.head.appendChild(style);
+    // Load comments after article is loaded
+    const commentPlaceholder = document.getElementById(
+      "comment-box-placeholder"
+    );
+    if (commentPlaceholder) {
+      fetch("/comment-box.html")
+        .then((res) => res.text())
+        .then((html) => {
+          commentPlaceholder.innerHTML = html;
 
-  
+          // Load comment script dynamically
+          const commentScript = document.createElement("script");
+          commentScript.src = "/assets/js/comment.js";
+          document.body.appendChild(commentScript);
+        })
+        .catch((err) => {
+          console.error("Failed to load comments:", err);
+        });
+    } else {
+      console.warn("Comment box placeholder not found");
+    }
   } catch (error) {
     console.log("Article ID:", articleID);
     console.error("Error fetching article:", error);
@@ -283,3 +304,4 @@ document.head.appendChild(style);
 
 // Fetch the article on page load
 fetchArticle();
+})();

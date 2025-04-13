@@ -2851,5 +2851,109 @@ body.modal-open {
   background-position: -2800px 0;
 }
 
+/* Sort by bar style for list.html page */
 
+.sort-controls {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
 
+.sort-dropdown {
+  /* margin-left: 10px; */
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Font Awesome 5 Free', sans-serif;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.select-wrapper i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  color: #555;
+  pointer-events: none;
+}
+
+.sort-dropdown {
+  padding: 5px 10px 5px 35px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+ /* Add icon prefix using ::before */
+ #sort-select option[value="trending"]::before {
+  content: "\f06d";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+#sort-select option[value="newest"]::before {
+  content: "\f017";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+#sort-select option[value="oldest"]::before {
+  content: "\f1da";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+#sort-select option[value="most-viewed"]::before {
+  content: "\f06e";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+#sort-select option[value="most-liked"]::before {
+  content: "\f004";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+#sort-select option[value="alphabetical"]::before {
+  content: "\f15d";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+/* Add some space between icon and text */
+.sort-dropdown option:before {
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 480px) {
+  .sort-controls {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  
+  .sort-dropdown {
+      margin-left: 0;
+      margin-top: 5px;
+      width: 100%;
+  }
+}
