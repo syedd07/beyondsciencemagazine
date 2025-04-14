@@ -21,6 +21,7 @@
   const articleImage = document.getElementById("article-image");
   const articleContent = document.getElementById("article-content");
   const authorDetails = document.getElementById("author-details");
+  const articleSpinner = document.getElementById('article-spinner');
 
   //  helper function for getting user likes from localStorage
   function getUserLikes() {
@@ -61,9 +62,15 @@
   async function fetchArticle() {
     // console.log("Fetching article...");
     // console.log("Article ID:", articleID);
+    if (articleSpinner) {
+      articleSpinner.style.display = 'flex'; // Show spinner
+      articleContent.style.display = 'none'; // Hide content area
+    }
+  
 
     if (!articleID) {
       // console.error("No article ID found in URL");
+      if (articleSpinner) articleSpinner.style.display = 'none';
       articleTitle.textContent = "Error: No Article Found";
       articleContent.textContent = "The requested article does not exist.";
       return;
@@ -131,7 +138,12 @@
         articleImage.src = "/articles/images/default-thumbnail.jpg";
         articleImage.classList.add("default-thumbnail"); // Add class for default image
       }
-      
+
+      if (articleSpinner) {
+        articleSpinner.style.display = 'none';
+        articleContent.style.display = 'block';
+      }      
+
       // Populate the article content
       articleContent.innerHTML =
         updatedArticle.story || "No content available.";
@@ -315,6 +327,7 @@
       console.error("Error fetching article:", error);
       articleTitle.textContent = "Error: Article Not Found";
       articleContent.textContent = "The requested article could not be found.";
+      if (articleSpinner) articleSpinner.style.display = 'none';
     }
   }
 

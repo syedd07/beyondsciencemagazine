@@ -17,7 +17,41 @@
      <link rel="icon" type="image/png" sizes="512x512" href="/articles/images/favicon_io/android-chrome-512x512.png">
      <link rel="manifest" href="/articles/site.webmanifest">
 
-     
+     <!-- Loader spinner -->
+     <style>
+        .loading-spinner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          min-height: 200px;
+          width: 100%;
+        }
+        
+        .spinner {
+          width: 40px;
+          height: 40px;
+          border: 4px solid rgba(245, 106, 106, 0.2);
+          border-radius: 50%;
+          border-top-color: #f56a6a;
+          animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+          margin-top: 15px;
+          font-size: 1em;
+          color: #888;
+        }
+        
+        .content-loading {
+          opacity: 0.6;
+          pointer-events: none;
+        }
+      </style>
     
 </head>
 <body class="is-preload">
@@ -71,8 +105,13 @@
                     </header>
                     <br  />
                     <div class="posts" id="articles-grid">
+                        <!-- Loading Spinner -->
+                        <div id="articles-spinner" class="loading-spinner">
+                          <div class="spinner"></div>
+                          <div class="loading-text">Loading articles...</div>
+                        </div>
                         <!-- Articles will be dynamically loaded here -->
-                    </div>
+                      </div>
 
                     
                 </section>
