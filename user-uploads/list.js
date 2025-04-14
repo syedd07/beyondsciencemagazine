@@ -150,13 +150,13 @@ function renderArticles(articles) {
 
 // Function to render pagination controls
 function renderPagination(totalItems) {
-  console.log("Rendering pagination. Total pages:", totalPages);
+ // console.log("Rendering pagination. Total pages:", totalPages);
 
   const paginationList = document.querySelector(
     "#pagination-container ul.pagination"
   );
   if (!paginationList) {
-    console.error("Pagination list element not found");
+   // console.error("Pagination list element not found");
     return;
   }
 
@@ -170,7 +170,7 @@ function renderPagination(totalItems) {
 
   // Don't create pagination elements if there's only one page
   if (totalPages <= 1) {
-    console.log("Only one page, not showing pagination numbers");
+   // console.log("Only one page, not showing pagination numbers");
     paginationList.innerHTML = "<li><span>Page 1 of 1</span></li>";
     return;
   }
