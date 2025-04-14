@@ -87,6 +87,9 @@
         pointer-events: none;
       }
     </style>
+
+  
+    
   </head>
   <body class="is-preload">
     <!-- Wrapper -->
@@ -176,6 +179,11 @@
             <hr class="major" />
             <!-- Author Details Section -->
             <div id="author-details" class="author-details-section">
+              <!-- Loading Spinner -->
+              <div id="article-spinner" class="loading-spinner">
+                <div class="spinner"></div>
+                <div class="loading-text">Loading details...</div>
+              </div>
               <!-- Content will be dynamically populated by view.js -->
             </div>
 
@@ -183,10 +191,9 @@
             <p id="article-content">Please wait while we load the article...</p>
           </section>
           <div class="article-actions">
-            
             <button id="bookmark-btn" class="bookmark-button">
               <i class="far fa-bookmark"></i>
-              
+
               <span> Save</span>
             </button>
           </div>
@@ -350,5 +357,48 @@
     <script src="/assets/js/breakpoints.min.js"></script>
     <script src="/assets/js/util.js"></script>
     <script src="/assets/js/main.js"></script>
+
+    <div id="author-modal" class="author-modal">
+      <div class="author-modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="edit-suggestion">
+          <i class="fas fa-pencil-alt" title="Suggest an edit"></i>
+        </div>
+        <div class="author-modal-header">
+          <i class="fas fa-user-circle fa-3x"></i>
+          <h2 id="modal-author-name"></h2>
+        </div>
+        <div class="author-modal-loading">
+          <div class="spinner"></div>
+        </div>
+        <div class="author-modal-body">
+          <div class="author-info-section">
+            <div class="info-item" id="author-university">
+              <i class="fas fa-university"></i>
+              <span></span>
+            </div>
+            <div class="info-item" id="author-country">
+              <i class="fas fa-globe"></i>
+              <span></span>
+            </div>
+          </div>
+          
+          <div class="author-research-fields">
+            <h4>Research Fields</h4>
+            <div id="author-tags"></div>
+          </div>
+          
+          <div class="author-social-links">
+            <h4>Connect</h4>
+            <div class="social-icons" id="author-social"></div>
+          </div>
+          
+          <button id="contact-author" class="contact-btn">
+            <i class="fas fa-envelope" style="align-items: center;"> Contact Author</i> 
+          </button>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>

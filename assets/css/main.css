@@ -3151,3 +3151,293 @@ body.modal-open {
   .share-icon i {
     font-size: 18px;
   }
+
+
+  /* Author Modal */
+
+/* Enhanced Author Modal with Brand Theme */
+
+.author-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.author-modal.show {
+  display: block;
+  opacity: 1;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.author-modal-content {
+  position: relative;
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 25px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-30px) scale(0.95);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.author-modal.show .author-modal-content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.close-modal {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #7f888f;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.3s ease;
+}
+
+.close-modal:hover {
+  color: #f56a6a;
+  transform: rotate(90deg);
+}
+
+.edit-suggestion {
+  position: absolute;
+  right: 45px;
+  top: 12px;
+}
+
+.edit-suggestion i {
+  color: #7f888f;
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.edit-suggestion i:hover {
+  color: #f56a6a;
+  transform: scale(1.1);
+}
+
+.author-modal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: solid 2px rgba(210, 215, 217, 0.75);
+  padding-bottom: 15px;
+}
+
+.author-modal-header i {
+  margin-right: 15px;
+  color: #3d4449;
+  font-size: 2em;
+}
+
+.author-modal-header h2 {
+  margin: 0;
+  font-size: 1.8em;
+  color: #3d4449;
+  font-family: "Roboto Slab", serif;
+}
+
+.author-modal-loading {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+}
+
+.author-modal-loading .spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(210, 215, 217, 0.75);
+  border-left-color: #f56a6a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.author-info-section {
+  margin-bottom: 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(210, 215, 217, 0.35);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item i {
+  width: 25px;
+  color: #7f888f;
+  margin-right: 10px;
+}
+
+.author-research-fields {
+  margin-bottom: 20px;
+}
+
+.author-research-fields h4, .author-social-links h4 {
+  margin-bottom: 15px;
+  color: #3d4449;
+  font-size: 1.1em;
+  /* font-family: "Roboto Slab", serif; */
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.author-research-fields h4:after, .author-social-links h4:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #f56a6a;
+}
+
+#author-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#author-tags .tag {
+  background-color: rgba(245, 106, 106, 0.1);
+  color: #3d4449;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+#author-tags .tag:hover {
+  background-color: rgba(245, 106, 106, 0.2);
+  transform: translateY(-2px);
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Keep the original social media brand colors */
+.social-icons .linkedin {
+  background: #0077b5;
+}
+
+.social-icons .twitter {
+  background: #1DA1F2;
+}
+
+.social-icons .instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* .contact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 6px 10px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9em;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.075em;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  height: 46px;
+  gap: 8px; /* Space between icon and text */
+
+
+.contact-btn i {
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+}
+
+.contact-btn:active {
+  transform: translateY(0);
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Apply staggered animations to modal elements */
+.author-modal.show .author-modal-header {
+  animation: slideIn 0.5s ease 0.1s forwards;
+}
+
+.author-modal.show .author-info-section {
+  animation: slideIn 0.5s ease 0.2s forwards;
+}
+
+.author-modal.show .author-research-fields {
+  animation: slideIn 0.5s ease 0.3s forwards;
+}
+
+.author-modal.show .author-social-links {
+  animation: slideIn 0.5s ease 0.4s forwards;
+}
+
+.author-modal.show .contact-btn {
+  animation: slideIn 0.5s ease 0.5s forwards;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .author-modal-content {
+    margin: 15% auto;
+    width: 95%;
+    padding: 20px 15px;
+  }
+}

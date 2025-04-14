@@ -514,30 +514,29 @@
       const createdTime = timeAgo(updatedArticle.$createdAt);
 
       authorDetails.innerHTML = `
-    <div class="author-info">
-      <i class="fas fa-user-circle fa-2x"></i>
-      <span>${updatedArticle.firstName} ${updatedArticle.lastName}</span>
-      ${
-        updatedArticle.isEmailVerified
-          ? `<i class="fas fa-check-circle tooltip-badge" style="color: #1DA1F2; margin-left: 2px; font-size: 1.2em; position: relative; cursor: help;">
-           <span class="custom-tooltip">Author's email is verified!</span>
-         </i>`
-          : ""
-      }
-    </div>
-    <br>
-    <div class="created-time" style="margin-bottom: 0px;">
-      <strong>Published:</strong> ${createdTime}
-    </div>
-    <div style="margin-right: 20px; margin-top: 10px">
-    <i class="fa fa-eye"></i> Views: ${updatedArticle.views || "Unable to fetch"}
-    </div>
-      <div style="display: flex;  position: relative; margin-left: 0;">
+      <div class="author-info">
+        <i class="fas fa-user-circle fa-2x"></i>
+        <span id="author-name-trigger">${updatedArticle.firstName} ${updatedArticle.lastName}</span>
+        ${
+          updatedArticle.isEmailVerified
+            ? `<i class="fas fa-check-circle tooltip-badge" style="color: #1DA1F2; margin-left: 2px; font-size: 1.2em; position: relative; cursor: help;">
+              <span class="custom-tooltip">Author's email is verified!</span>
+            </i>`
+            : ""
+        }
+      </div>
+      <br>
+      <div class="created-time" style="margin-bottom: 0px;">
+        <strong>Published:</strong> ${createdTime}
+      </div>
+      <div style="margin-right: 20px; margin-top: 10px">
+        <i class="fa fa-eye"></i> Views: ${updatedArticle.views || "Unable to fetch"}
+      </div>
+      <div style="display: flex; position: relative; margin-left: 0;">
         <div class="heart" id="like-button" style="margin-left: -40px; margin-top: -20px padding: 0;"></div>
         <span id="like-count" style="position: absolute; left: 28px; top: 39px; font-weight: bold; font-size: 1em; text-decoration: underline;">${updatedArticle.likes || "0"}</span>
       </div>
-    
-  `;
+    `;
       const style = document.createElement("style");
       style.textContent = `
   .tooltip-badge {
@@ -581,6 +580,9 @@
   `;
       document.head.appendChild(style);
 
+      // Initialize author modal functionality
+      setupAuthorModal(updatedArticle);
+
       loadComments();
 
       // After all content is loaded - call the new functions:
@@ -599,34 +601,175 @@
     }
   }
 
-  // Separate function for loading comments to improve code organization
-function loadComments() {
-  const commentPlaceholder = document.getElementById("comment-box-placeholder");
-  if (!commentPlaceholder) {
-    console.warn("Comment box placeholder not found");
-    return;
-  }
+  // Then add this function to your script
+  function setupAuthorModal(author) {
+  // Get elements
+  const authorNameTrigger = document.getElementById('author-name-trigger');
+  const modal = document.getElementById('author-modal');
+  const modalContent = modal.querySelector('.author-modal-content');
+  const closeButton = modal.querySelector('.close-modal');
+  const modalLoading = modal.querySelector('.author-modal-loading');
+  const modalBody = modal.querySelector('.author-modal-body');
   
-  // First check if comments are already loaded to prevent duplication
-  if (commentPlaceholder.dataset.loaded === "true") {
-    return;
-  }
+  // Style the author name trigger
+  if (authorNameTrigger) {
+    authorNameTrigger.style.cursor = 'pointer';
+    authorNameTrigger.style.color = '#4a9df8';
+    authorNameTrigger.style.fontWeight = 'bold';
   
-  fetch("/comment-box.html")
-    .then((res) => res.text())
-    .then((html) => {
-      commentPlaceholder.innerHTML = html;
-      commentPlaceholder.dataset.loaded = "true"; // Mark as loaded
+    // Set modal title
+    document.getElementById('modal-author-name').textContent = 
+      `${author.firstName} ${author.lastName}`;
       
-      // Load comment script dynamically
-      const commentScript = document.createElement("script");
-      commentScript.src = "/assets/js/comment.js";
-      document.body.appendChild(commentScript);
-    })
-    .catch((err) => {
-      console.error("Failed to load comments:", err);
-    });
+    // Set up hover/click events based on device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // For mobile, use click
+      authorNameTrigger.addEventListener('click', showModal);
+    } else {
+      // For desktop, use hover
+      let hoverTimeout;
+      authorNameTrigger.addEventListener('mouseenter', () => {
+        hoverTimeout = setTimeout(showModal, 300); // Delay to avoid accidental triggers
+      });
+      authorNameTrigger.addEventListener('mouseleave', () => {
+        clearTimeout(hoverTimeout);
+      });
+      // Still allow click on desktop
+      authorNameTrigger.addEventListener('click', showModal);
+    }
+  }
+  
+  // Close events
+  closeButton.addEventListener('click', hideModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) hideModal();
+  });
+  
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) hideModal();
+  });
+  
+  function showModal() {
+    modal.classList.add('show');
+    // Initially show loading and hide content
+    modalLoading.style.display = 'flex';
+    modalBody.style.display = 'none';
+    
+    // Fill the modal with author data
+    fillAuthorData(author);
+  }
+  
+  function hideModal() {
+    modal.classList.remove('show');
+  }
+  
+  // THIS FUNCTION WAS MISSING - Add it to fix the loading issue
+  function fillAuthorData(author) {
+    // Short timeout to show the loading animation
+    setTimeout(() => {
+      // Set university if available
+      const universityEl = document.getElementById('author-university').querySelector('span');
+      universityEl.textContent = author.university || 'Not provided';
+      
+      // Set country if available
+      const countryEl = document.getElementById('author-country').querySelector('span');
+      countryEl.textContent = author.country || 'Not provided';
+      
+      // Set research fields
+      const tagsContainer = document.getElementById('author-tags');
+      if (author.researchFields && author.researchFields.length > 0) {
+        tagsContainer.innerHTML = author.researchFields
+          .map(field => `<span class="tag">${field}</span>`)
+          .join('');
+      } else {
+        tagsContainer.innerHTML = '<span class="tag">No research fields provided</span>';
+      }
+      
+      // Set social links
+      const socialContainer = document.getElementById('author-social');
+      let socialHTML = '';
+      
+      if (author.linkedIn) {
+        socialHTML += `<a href="${author.linkedIn}" class="linkedin" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                      </a>`;
+      }
+      
+      if (author.twitter) {
+        socialHTML += `<a href="${author.twitter}" class="twitter" target="_blank" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                      </a>`;
+      }
+      
+      if (author.instagram) {
+        socialHTML += `<a href="${author.instagram}" class="instagram" target="_blank" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                      </a>`;
+      }
+      
+      if (socialHTML === '') {
+        socialContainer.innerHTML = '<p>No social media links provided</p>';
+      } else {
+        socialContainer.innerHTML = socialHTML;
+      }
+      
+      // Set up contact button
+      const contactButton = document.getElementById('contact-author');
+      if (author.email) {
+        contactButton.addEventListener('click', () => {
+          window.location.href = `mailto:${author.email}?subject=Regarding your article on Beyond Science Magazine`;
+        });
+      } else {
+        contactButton.disabled = true;
+        contactButton.textContent = 'Email not available';
+      }
+      
+      // Set up edit suggestion button
+      const editButton = document.querySelector('.edit-suggestion i');
+      editButton.addEventListener('click', () => {
+        showToast('Edit suggestion feature coming soon!', 'error');
+      });
+      
+      // Hide loading, show content
+      modalLoading.style.display = 'none';
+      modalBody.style.display = 'block';
+    }, 500); // Short delay for loading animation
+  }
 }
+
+  // Separate function for loading comments to improve code organization
+  function loadComments() {
+    const commentPlaceholder = document.getElementById(
+      "comment-box-placeholder"
+    );
+    if (!commentPlaceholder) {
+      console.warn("Comment box placeholder not found");
+      return;
+    }
+
+    // First check if comments are already loaded to prevent duplication
+    if (commentPlaceholder.dataset.loaded === "true") {
+      return;
+    }
+
+    fetch("/comment-box.html")
+      .then((res) => res.text())
+      .then((html) => {
+        commentPlaceholder.innerHTML = html;
+        commentPlaceholder.dataset.loaded = "true"; // Mark as loaded
+
+        // Load comment script dynamically
+        const commentScript = document.createElement("script");
+        commentScript.src = "/assets/js/comment.js";
+        document.body.appendChild(commentScript);
+      })
+      .catch((err) => {
+        console.error("Failed to load comments:", err);
+      });
+  }
 
   // Fetch the article on page load
   fetchArticle();

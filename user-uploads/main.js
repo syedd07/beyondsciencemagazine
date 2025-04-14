@@ -106,12 +106,14 @@ window.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    // Add classes to trigger animations
     previewModal.classList.add("active");
     modalOverlay.classList.add("active");
     document.body.classList.add("modal-open");
   });
 
 
+  // Remove classes to reverse animations
   const closePreview = () => {
     previewModal.classList.remove("active");
     modalOverlay.classList.remove("active");
