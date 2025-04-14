@@ -123,22 +123,22 @@ function renderArticles(articles) {
 
     articleCard.innerHTML = `
       <a href="/user-uploads/articles/view.html?articleID=${article.$id}" class="image">
-        <div style="position: relative; width: 100%; height: 250px; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
-          <img src="${imageUrl}" alt="${article.firstName} ${article.lastName}">
-        </div>
+      <div style="position: relative; width: 100%; height: 250px; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+        <img src="${imageUrl}" alt="${article.title}">
+      </div>
       </a>
-      <h3>${article.firstName} ${article.lastName}</h3>
+      <h3>${article.articleTitle}</h3>
       <p>${article.shortBio || "No description available."}</p>
       
       <div class="article-metrics" style="margin-top: 10px; font-size: 14px; color: #666; gap: 8px; display: flex;">
-        <span><i class="fa fa-calendar"></i>  ${timeAgo(new Date(article.$createdAt))}</span>
-        <span><i class="fa fa-heart"></i>  ${article.likes || 0}</span>
-        <span><i class="fa fa-eye"></i>  ${article.views || 0}</span>
-        <br >
+      <span><i class="fa fa-calendar"></i>  ${timeAgo(new Date(article.$createdAt))}</span>
+      <span><i class="fa fa-heart"></i>  ${article.likes || 0}</span>
+      <span><i class="fa fa-eye"></i>  ${article.views || 0}</span>
+      <br >
       </div>
       
       <ul class="actions" style="margin-top: 10px;">
-        <li><a href="/user-uploads/articles/view.html?articleID=${article.$id}" class="button">Continue Reading</a></li>
+      <li><a href="/user-uploads/articles/view.html?articleID=${article.$id}" class="button">Continue Reading</a></li>
       </ul>
     `;
     articlesGrid.appendChild(articleCard);

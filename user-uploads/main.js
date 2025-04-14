@@ -371,6 +371,9 @@ verifyOtpBtn.addEventListener("click", async (e) => {
 finalSubmit.addEventListener("click", async (e) => {
   e.preventDefault();
 
+ // Add this line to transfer Quill content to hidden input
+ document.getElementById("StoryContent").value = quill.root.innerHTML;
+
   // Check if OTP is verified
   if (!isOtpVerified) {
     notyf.error("Please verify your OTP before submitting the form.");
@@ -379,7 +382,7 @@ finalSubmit.addEventListener("click", async (e) => {
 
   // Check if the story content is too long
   const storyHTML = document.querySelector("#editor .ql-editor").innerHTML;
-  if (storyHTML.length > 150000) {
+  if (storyHTML.length > 150000) {    
     notyf.error(
       "Your story is too long. Please shorten it to fit within 1500 characters."
     );
