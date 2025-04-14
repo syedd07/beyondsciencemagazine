@@ -6,6 +6,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
+    <!-- Notyf CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <!-- Notyf JS -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/assets/js/jquery.min.js"></script>
     <meta charset="utf-8" />
@@ -87,6 +94,9 @@
       <!-- Main -->
       <div id="main">
         <div class="inner">
+          <div class="progress-container">
+            <div class="progress-bar" id="reading-progress-bar"></div>
+          </div>
           <!-- Header -->
           <header id="header">
             <a href="/index.html" class="logo"
@@ -133,7 +143,7 @@
             <div class="spinner"></div>
             <div class="loading-text">Loading article...</div>
           </div>
-          
+
           <!-- Content -->
           <section>
             <header class="main">
@@ -168,24 +178,51 @@
             <div id="author-details" class="author-details-section">
               <!-- Content will be dynamically populated by view.js -->
             </div>
+
             <hr class="major" />
             <p id="article-content">Please wait while we load the article...</p>
+          </section>
+          <div class="article-actions">
+            
+            <button id="bookmark-btn" class="bookmark-button">
+              <i class="far fa-bookmark"></i>
+              
+              <span> Save</span>
+            </button>
+          </div>
+
+          <div class="social-share">
+            <span>Share this article:</span>
+            <a id="share-twitter" class="share-icon" title="Share on Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a id="share-facebook" class="share-icon" title="Share on Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a id="share-linkedin" class="share-icon" title="Share on LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a id="share-copy" class="share-icon" title="Copy link">
+              <i class="fas fa-link"></i>
+            </a>
+          </div>
+          <br />
+          <!-- Related Articles -->
+          <section id="related-articles" class="related-articles">
+            <h2>Related Articles</h2>
+            <p></p>
+            <div class="related-articles-container">
+              <!-- Will be populated by JS -->
+              <div class="loading-spinner small">
+                <div class="spinner"></div>
+              </div>
+            </div>
           </section>
 
           <!-- Comment Box -->
           <hr class="major" />
           <section>
             <div id="comment-box-placeholder"></div>
-            <script>
-              fetch("/comment-box.html")
-                .then((res) => res.text())
-                .then((html) => {
-                  document.getElementById("comment-box-placeholder").innerHTML =
-                    html;
-                });
-            </script>
-            <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
-            <script src="/assets/js/comment.js"></script>
           </section>
 
           <hr class="major" />

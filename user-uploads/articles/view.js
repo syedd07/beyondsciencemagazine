@@ -21,7 +21,18 @@
   const articleImage = document.getElementById("article-image");
   const articleContent = document.getElementById("article-content");
   const authorDetails = document.getElementById("author-details");
-  const articleSpinner = document.getElementById('article-spinner');
+  const articleSpinner = document.getElementById("article-spinner");
+
+  // Calculate reading time
+  function calculateReadingTime(content) {
+    // Strip HTML tags
+    const text = content.replace(/<[^>]*>/g, "");
+    // Count words (split by spaces)
+    const wordCount = text.split(/\s+/).length;
+    // Calculate reading time (average 200 words per minute)
+    const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+    return readingTime;
+  }
 
   //  helper function for getting user likes from localStorage
   function getUserLikes() {
@@ -58,19 +69,280 @@
     return "just now";
   }
 
+  // Helper function for showing toast notifications - move outside fetchArticle
+  // Initialize Notyf
+  const notyf = new Notyf({
+    duration: 5000, // Notification duration in milliseconds
+    position: {
+      x: "right",
+      y: "top",
+    },
+    dismissible: true, // Allow dismissing notifications
+  });
+
+  // Helper function for showing toast notifications
+  function showToast(message, type = "success") {
+    notyf.open({
+      type: type,
+      message: message,
+    });
+  }
+
+  // Social sharing function
+  function setupSocialSharing(article) {
+    const pageUrl = encodeURIComponent(window.location.href);
+
+    // Twitter share - improved format to avoid showing encoded URL in the middle
+    document.getElementById("share-twitter").addEventListener("click", () => {
+      const title = encodeURIComponent(article.articleTitle || "Article");
+      const authorName = encodeURIComponent(
+        `${article.firstName} ${article.lastName}`
+      );
+
+      // Define hashtags for Twitter
+      const hashtags = "BeyondScience,Research,Science";
+
+      // Create better formatted tweet text without the URL in the middle
+      const tweetText = encodeURIComponent(
+        `Check out "${article.articleTitle}" by ${article.firstName} ${article.lastName} on BEYOND SC!ENCE Magazine`
+      );
+
+      window.open(
+        `https://twitter.com/intent/tweet?text=${tweetText}&url=${pageUrl}&hashtags=${hashtags}`,
+        "_blank"
+      );
+    });
+
+    // Facebook share with new tab
+    document.getElementById("share-facebook").addEventListener("click", () => {
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
+        "_blank"
+      );
+    });
+
+    // LinkedIn share - simplified to work better with LinkedIn's API
+    document.getElementById("share-linkedin").addEventListener("click", () => {
+      // LinkedIn only reliably accepts the URL parameter
+      window.open(
+        `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`,
+        "_blank"
+      );
+    });
+
+    // Copy link
+    document.getElementById("share-copy").addEventListener("click", () => {
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(() => {
+          showToast("Link copied to clipboard!", "success");
+        })
+        .catch((err) => {
+          showToast("Failed to copy link", "error");
+        });
+    });
+  }
+
+  // New function to update banner based on verification status
+  function updateVerificationBanner(isVerified) {
+    // console.log("Verification status:", isVerified);
+    const bannerElement = document.getElementById("verification-banner");
+
+    if (!bannerElement) {
+      //console.error("Verification banner element not found!");
+      return; // Exit if banner element doesn't exist
+    }
+
+    if (isVerified) {
+      // Show verified banner
+      bannerElement.innerHTML = `
+      <div class="verification-success">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-text">
+          <strong>VERIFIED:</strong> THE FACTS AND INFORMATION IN THIS ARTICLE HAVE BEEN 
+          REVIEWED AND VERIFIED BY THE BEYOND SC!ENCE MAGAZINE EDITORIAL TEAM.
+        </div>
+      </div>
+    `;
+    } else {
+      // Show default warning banner (unverified)
+      bannerElement.innerHTML = `
+      <div class="verification-warning">
+        <div class="warning-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="warning-text">
+          <strong>DISCLAIMER:</strong> BEYOND SC!ENCE MAGAZINE HAS NOT VERIFIED THE FACTS OR 
+          CLAIMS IN THIS USER-CONTRIBUTED ARTICLE. Readers should exercise discretion.
+        </div>
+      </div>
+    `;
+    }
+  }
+
+  window.addEventListener("scroll", function () {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById("reading-progress-bar").style.width =
+      scrolled + "%";
+  });
+
+  // Bookmark functionality
+  function setupBookmarkFeature() {
+    const bookmarkBtn = document.getElementById("bookmark-btn");
+    if (!bookmarkBtn) return;
+
+    // Check if article is already bookmarked
+    const bookmarks = JSON.parse(
+      localStorage.getItem("bookmarkedArticles") || "[]"
+    );
+    const isBookmarked = bookmarks.includes(articleID);
+
+    // Update initial state
+    if (isBookmarked) {
+      bookmarkBtn.classList.add("active");
+      bookmarkBtn.innerHTML =
+        '<i class="fas fa-bookmark"></i><span>Saved</span>';
+    }
+
+    // Add click handler
+    bookmarkBtn.addEventListener("click", () => {
+      const bookmarks = JSON.parse(
+        localStorage.getItem("bookmarkedArticles") || "[]"
+      );
+      const isCurrentlyBookmarked = bookmarks.includes(articleID);
+
+      if (!isCurrentlyBookmarked) {
+        // Add to bookmarks
+        bookmarks.push(articleID);
+        bookmarkBtn.classList.add("active");
+        bookmarkBtn.innerHTML =
+          '<i class="fas fa-bookmark"></i><span> Saved</span>';
+        showToast("Article saved to your bookmarks", "success");
+      } else {
+        // Remove from bookmarks
+        const index = bookmarks.indexOf(articleID);
+        bookmarks.splice(index, 1);
+        bookmarkBtn.classList.remove("active");
+        bookmarkBtn.innerHTML =
+          '<i class="far fa-bookmark"></i><span>Save</span>';
+        showToast("Article removed from your bookmarks", "error");
+      }
+
+      localStorage.setItem("bookmarkedArticles", JSON.stringify(bookmarks));
+    });
+  }
+
+  // Fetch related articles
+  async function fetchRelatedArticles(currentArticle) {
+    try {
+      // Get 20 most recent articles
+      const response = await databases.listDocuments(databaseId, collectionId, [
+        // Limit 20, order by created date
+        Appwrite.Query.limit(20),
+        Appwrite.Query.orderDesc("$createdAt"),
+      ]);
+
+      // Filter out the current article
+      let relatedArticles = response.documents.filter(
+        (art) => art.$id !== articleID
+      );
+
+      // Score articles by relevance:
+      // 1. Same author (+10 points)
+      // 2. Shared research fields/tags (+5 points per match)
+      relatedArticles = relatedArticles.map((art) => {
+        let score = 0;
+
+        // Same author
+        if (
+          art.firstName === currentArticle.firstName &&
+          art.lastName === currentArticle.lastName
+        ) {
+          score += 10;
+        }
+
+        // Shared research fields
+        if (art.researchFields && currentArticle.researchFields) {
+          const commonFields = art.researchFields.filter((field) =>
+            currentArticle.researchFields.includes(field)
+          );
+          score += commonFields.length * 5;
+        }
+
+        return { ...art, relevanceScore: score };
+      });
+
+      // Sort by relevance score then date (for ties)
+      relatedArticles.sort((a, b) => {
+        if (b.relevanceScore !== a.relevanceScore) {
+          return b.relevanceScore - a.relevanceScore;
+        }
+        return new Date(b.$createdAt) - new Date(a.$createdAt);
+      });
+
+      // Take top 3
+      return relatedArticles.slice(0, 3);
+    } catch (error) {
+      console.error("Error fetching related articles:", error);
+      return [];
+    }
+  }
+
+  // Render related articles
+  function renderRelatedArticles(articles) {
+    const container = document.querySelector(".related-articles-container");
+    if (!container) return;
+
+    if (articles.length === 0) {
+      container.innerHTML = "<p>No related articles found.</p>";
+      return;
+    }
+
+    const articlesHTML = articles
+      .map(
+        (article) => `
+      <div class="related-article">
+        <a href="view.html?articleID=${article.$id}">
+          <div class="related-article-image">
+            <img src="${
+              article.image_id
+                ? `https://cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${article.image_id}/view?project=67efa9d90005502fbfa9`
+                : "/articles/images/default-thumbnail.jpg"
+            }" 
+              alt="${article.articleTitle || "Related article"}">
+          </div>
+          <div class="related-article-content">
+            <h4>${article.articleTitle || "Untitled Article"}</h4>
+            <p class="related-article-author">By ${article.firstName} ${article.lastName}</p>
+          </div>
+        </a>
+      </div>
+    `
+      )
+      .join("");
+
+    container.innerHTML = articlesHTML;
+  }
+
   // Fetch and Render Article
   async function fetchArticle() {
     // console.log("Fetching article...");
     // console.log("Article ID:", articleID);
     if (articleSpinner) {
-      articleSpinner.style.display = 'flex'; // Show spinner
-      articleContent.style.display = 'none'; // Hide content area
+      articleSpinner.style.display = "flex"; // Show spinner
+      articleContent.style.display = "none"; // Hide content area
     }
-  
 
     if (!articleID) {
       // console.error("No article ID found in URL");
-      if (articleSpinner) articleSpinner.style.display = 'none';
+      if (articleSpinner) articleSpinner.style.display = "none";
       articleTitle.textContent = "Error: No Article Found";
       articleContent.textContent = "The requested article does not exist.";
       return;
@@ -139,14 +411,14 @@
         articleImage.classList.add("default-thumbnail"); // Add class for default image
       }
 
-      if (articleSpinner) {
-        articleSpinner.style.display = 'none';
-        articleContent.style.display = 'block';
-      }      
-
       // Populate the article content
       articleContent.innerHTML =
         updatedArticle.story || "No content available.";
+
+      if (articleSpinner) {
+        articleSpinner.style.display = "none";
+        articleContent.style.display = "block";
+      }
 
       // Update the page title
       document.title = `${updatedArticle.articleTitle || "Untitled Article"} - BEYOND SC!ENCE Magazine`;
@@ -169,6 +441,13 @@
           : ""
       }
     `;
+
+      const readingTime = calculateReadingTime(updatedArticle.story || "");
+      const readingTimeHTML = `<div class="reading-time"><i class="far fa-clock"></i> ${readingTime} min read</div>`;
+      // Insert after the title
+      document
+        .querySelector(".main h1")
+        .insertAdjacentHTML("afterend", readingTimeHTML);
 
       // Handle "Like" button
       $(function () {
@@ -301,74 +580,53 @@
   }
   `;
       document.head.appendChild(style);
-      // Load comments after article is loaded
-      const commentPlaceholder = document.getElementById(
-        "comment-box-placeholder"
-      );
-      if (commentPlaceholder) {
-        fetch("/comment-box.html")
-          .then((res) => res.text())
-          .then((html) => {
-            commentPlaceholder.innerHTML = html;
 
-            // Load comment script dynamically
-            const commentScript = document.createElement("script");
-            commentScript.src = "/assets/js/comment.js";
-            document.body.appendChild(commentScript);
-          })
-          .catch((err) => {
-            console.error("Failed to load comments:", err);
-          });
-      } else {
-        console.warn("Comment box placeholder not found");
-      }
+      loadComments();
+
+      // After all content is loaded - call the new functions:
+      setupSocialSharing(updatedArticle);
+      setupBookmarkFeature();
+
+      // After updating content, fetch and render related articles
+      const relatedArticles = await fetchRelatedArticles(updatedArticle);
+      renderRelatedArticles(relatedArticles);
     } catch (error) {
       console.log("Article ID:", articleID);
       console.error("Error fetching article:", error);
       articleTitle.textContent = "Error: Article Not Found";
       articleContent.textContent = "The requested article could not be found.";
-      if (articleSpinner) articleSpinner.style.display = 'none';
+      if (articleSpinner) articleSpinner.style.display = "none";
     }
   }
 
-  // New function to update banner based on verification status
-  function updateVerificationBanner(isVerified) {
-    // console.log("Verification status:", isVerified);
-    const bannerElement = document.getElementById("verification-banner");
-
-    if (!bannerElement) {
-      //console.error("Verification banner element not found!");
-      return; // Exit if banner element doesn't exist
-    }
-
-    if (isVerified) {
-      // Show verified banner
-      bannerElement.innerHTML = `
-      <div class="verification-success">
-        <div class="success-icon">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <div class="success-text">
-          <strong>VERIFIED:</strong> THE FACTS AND INFORMATION IN THIS ARTICLE HAVE BEEN 
-          REVIEWED AND VERIFIED BY THE BEYOND SC!ENCE MAGAZINE EDITORIAL TEAM.
-        </div>
-      </div>
-    `;
-    } else {
-      // Show default warning banner (unverified)
-      bannerElement.innerHTML = `
-      <div class="verification-warning">
-        <div class="warning-icon">
-          <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <div class="warning-text">
-          <strong>DISCLAIMER:</strong> BEYOND SC!ENCE MAGAZINE HAS NOT VERIFIED THE FACTS OR 
-          CLAIMS IN THIS USER-CONTRIBUTED ARTICLE. Readers should exercise discretion.
-        </div>
-      </div>
-    `;
-    }
+  // Separate function for loading comments to improve code organization
+function loadComments() {
+  const commentPlaceholder = document.getElementById("comment-box-placeholder");
+  if (!commentPlaceholder) {
+    console.warn("Comment box placeholder not found");
+    return;
   }
+  
+  // First check if comments are already loaded to prevent duplication
+  if (commentPlaceholder.dataset.loaded === "true") {
+    return;
+  }
+  
+  fetch("/comment-box.html")
+    .then((res) => res.text())
+    .then((html) => {
+      commentPlaceholder.innerHTML = html;
+      commentPlaceholder.dataset.loaded = "true"; // Mark as loaded
+      
+      // Load comment script dynamically
+      const commentScript = document.createElement("script");
+      commentScript.src = "/assets/js/comment.js";
+      document.body.appendChild(commentScript);
+    })
+    .catch((err) => {
+      console.error("Failed to load comments:", err);
+    });
+}
 
   // Fetch the article on page load
   fetchArticle();
