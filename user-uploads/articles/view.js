@@ -1,135 +1,146 @@
-(function() {
-const { Client, Databases } = Appwrite;
+(function () {
+  const { Client, Databases } = Appwrite;
 
-// Initialize Appwrite Client
-const client = new Appwrite.Client();
-client
-  .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject("67efa9d90005502fbfa9");
+  // Initialize Appwrite Client
+  const client = new Appwrite.Client();
+  client
+    .setEndpoint("https://cloud.appwrite.io/v1")
+    .setProject("67efa9d90005502fbfa9");
 
-const databases = new Appwrite.Databases(client);
-const databaseId = "67efbe710015ee79508f";
-const collectionId = "67f16ece002b3f15acb3";
-const BUCKET_ID = "67f1709500236aedbcce";
+  const databases = new Appwrite.Databases(client);
+  const databaseId = "67efbe710015ee79508f";
+  const collectionId = "67f16ece002b3f15acb3";
+  const BUCKET_ID = "67f1709500236aedbcce";
 
-// Extract articleID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const articleID = urlParams.get("articleID");
+  // Extract articleID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const articleID = urlParams.get("articleID");
 
-// DOM Elements
-const articleTitle = document.getElementById("article-title");
-const articleImage = document.getElementById("article-image");
-const articleContent = document.getElementById("article-content");
-const authorDetails = document.getElementById("author-details");
+  // DOM Elements
+  const articleTitle = document.getElementById("article-title");
+  const articleImage = document.getElementById("article-image");
+  const articleContent = document.getElementById("article-content");
+  const authorDetails = document.getElementById("author-details");
 
-//  helper function for getting user likes from localStorage
-function getUserLikes() {
-  const likes = localStorage.getItem("userLikes");
-  return likes ? JSON.parse(likes) : {};
-}
-// helper function to get user views from localStorage
-function getUserViews() {
-  const views = localStorage.getItem("userViews");
-  return views ? JSON.parse(views) : {};
-}
-
-// Helper function to format time as "1d ago", "1hr ago", etc.
-function timeAgo(date) {
-  const now = new Date();
-  const createdDate = new Date(date);
-  const seconds = Math.floor((now - createdDate) / 1000);
-  const intervals = {
-    year: 31536000,
-    month: 2592000,
-    week: 604800,
-    day: 86400,
-    hour: 3600,
-    minute: 60,
-    second: 1,
-  };
-
-  for (const [unit, value] of Object.entries(intervals)) {
-    const count = Math.floor(seconds / value);
-    if (count > 0) {
-      return `${count} ${unit}${count > 1 ? "s" : ""} ago`;
-    }
+  //  helper function for getting user likes from localStorage
+  function getUserLikes() {
+    const likes = localStorage.getItem("userLikes");
+    return likes ? JSON.parse(likes) : {};
   }
-  return "just now";
-}
-
-// Fetch and Render Article
-async function fetchArticle() {
- // console.log("Fetching article...");
- // console.log("Article ID:", articleID);
-
-  if (!articleID) {
-   // console.error("No article ID found in URL");
-    articleTitle.textContent = "Error: No Article Found";
-    articleContent.textContent = "The requested article does not exist.";
-    return;
+  // helper function to get user views from localStorage
+  function getUserViews() {
+    const views = localStorage.getItem("userViews");
+    return views ? JSON.parse(views) : {};
   }
 
-  try {
-   // console.log("Attempting to fetch article with ID:", articleID);
+  // Helper function to format time as "1d ago", "1hr ago", etc.
+  function timeAgo(date) {
+    const now = new Date();
+    const createdDate = new Date(date);
+    const seconds = Math.floor((now - createdDate) / 1000);
+    const intervals = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    };
 
-    // 1. Fetch the existing document
-    const article = await databases.getDocument(
-      databaseId,
-      collectionId,
-      articleID
-    );
-   // console.log("Successfully fetched article:", article);
+    for (const [unit, value] of Object.entries(intervals)) {
+      const count = Math.floor(seconds / value);
+      if (count > 0) {
+        return `${count} ${unit}${count > 1 ? "s" : ""} ago`;
+      }
+    }
+    return "just now";
+  }
 
-    // 2. Check if user has viewed this article within the last 24 hours
-    const userViews = getUserViews();
-    const lastViewTime = userViews[articleID] || 0;
-    const viewExpired = Date.now() - lastViewTime > 24 * 60 * 60 * 1000; // 24 hours
+  // Fetch and Render Article
+  async function fetchArticle() {
+    // console.log("Fetching article...");
+    // console.log("Article ID:", articleID);
 
-    // Only increment views if this is a new view or the previous view has expired
-    if (!lastViewTime || viewExpired) {
-      // Store this view with timestamp
-      userViews[articleID] = Date.now();
-      localStorage.setItem("userViews", JSON.stringify(userViews));
-
-      // Increment view in database
-      const updatedViews = (article.views || 0) + 1;
-      await databases.updateDocument(databaseId, collectionId, articleID, {
-        views: updatedViews,
-        likes: article.likes ?? 0,
-        isEmailVerified: article.isEmailVerified,
-      });
+    if (!articleID) {
+      // console.error("No article ID found in URL");
+      articleTitle.textContent = "Error: No Article Found";
+      articleContent.textContent = "The requested article does not exist.";
+      return;
     }
 
-    // 3. Re-fetch updated document after potential view update
-    const updatedArticle = await databases.getDocument(
-      databaseId,
-      collectionId,
-      articleID
-    );
+    try {
+      // console.log("Attempting to fetch article with ID:", articleID);
 
-    // 4. Update UI with new views
-    const viewsSpan = document.getElementById("article-views");
-    if (viewsSpan) {
-      viewsSpan.textContent = `Views: ${updatedArticle.views || 0}`;
-    }
+      // 1. Fetch the existing document
+      const article = await databases.getDocument(
+        databaseId,
+        collectionId,
+        articleID
+      );
+      // console.log("Successfully fetched article:", article);
 
-    // Use the articleTitle attribute for the title
-    articleTitle.textContent =
-      updatedArticle.articleTitle || "Untitled Article";
+      // Get the verification status
+      const isVerified = article.isVerified || false;
 
-    // Populate the article image
-    articleImage.src = updatedArticle.image_id
-      ? `https://cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${updatedArticle.image_id}/view?project=67efa9d90005502fbfa9`
-      : "/articles/images/default-thumbnail.jpg";
+      // Update the verification banner
+      updateVerificationBanner(isVerified);
 
-    // Populate the article content
-    articleContent.innerHTML = updatedArticle.story || "No content available.";
+      // 2. Check if user has viewed this article within the last 24 hours
+      const userViews = getUserViews();
+      const lastViewTime = userViews[articleID] || 0;
+      const viewExpired = Date.now() - lastViewTime > 24 * 60 * 60 * 1000; // 24 hours
 
-    // Update the page title
-    document.title = `${updatedArticle.articleTitle || "Untitled Article"} - BEYOND SC!ENCE Magazine`;
+      // Only increment views if this is a new view or the previous view has expired
+      if (!lastViewTime || viewExpired) {
+        // Store this view with timestamp
+        userViews[articleID] = Date.now();
+        localStorage.setItem("userViews", JSON.stringify(userViews));
 
-    // Populate the author details section
-    const socialLinks = `
+        // Increment view in database
+        const updatedViews = (article.views || 0) + 1;
+        await databases.updateDocument(databaseId, collectionId, articleID, {
+          views: updatedViews,
+          likes: article.likes ?? 0,
+          isEmailVerified: article.isEmailVerified,
+        });
+      }
+
+      // 3. Re-fetch updated document after potential view update
+      const updatedArticle = await databases.getDocument(
+        databaseId,
+        collectionId,
+        articleID
+      );
+
+      // 4. Update UI with new views
+      const viewsSpan = document.getElementById("article-views");
+      if (viewsSpan) {
+        viewsSpan.textContent = `Views: ${updatedArticle.views || 0}`;
+      }
+
+      // Use the articleTitle attribute for the title
+      articleTitle.textContent =
+        updatedArticle.articleTitle || "Untitled Article";
+
+      // Populate the article image
+      if (updatedArticle.image_id) {
+        articleImage.src = `https://cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${updatedArticle.image_id}/view?project=67efa9d90005502fbfa9`;
+        articleImage.classList.remove("default-thumbnail"); // Remove class if it exists
+      } else {
+        articleImage.src = "/articles/images/default-thumbnail.jpg";
+        articleImage.classList.add("default-thumbnail"); // Add class for default image
+      }
+      
+      // Populate the article content
+      articleContent.innerHTML =
+        updatedArticle.story || "No content available.";
+
+      // Update the page title
+      document.title = `${updatedArticle.articleTitle || "Untitled Article"} - BEYOND SC!ENCE Magazine`;
+
+      // Populate the author details section
+      const socialLinks = `
       ${
         updatedArticle.linkedIn
           ? `<a href="${updatedArticle.linkedIn}" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>`
@@ -147,66 +158,71 @@ async function fetchArticle() {
       }
     `;
 
-    // Handle "Like" button
-    $(function () {
-      // Check if user already liked this article
-      const userLikes = getUserLikes();
-      const hasLiked = userLikes[articleID] === true;
-
-      // Set initial UI state
-      if (hasLiked) {
-        $("#like-button").addClass("is-active");
-      }
-
-      $("#like-button").on("click", async function () {
-        if (!articleID) return;
-
-        // Toggle like status in localStorage
+      // Handle "Like" button
+      $(function () {
+        // Check if user already liked this article
         const userLikes = getUserLikes();
-        const isNowLiked = !userLikes[articleID];
-        userLikes[articleID] = isNowLiked;
-        localStorage.setItem("userLikes", JSON.stringify(userLikes));
+        const hasLiked = userLikes[articleID] === true;
 
-        // Toggle UI feedback
-        $(this).toggleClass("is-active");
-
-        try {
-          // Fetch current document
-          const doc = await databases.getDocument(
-            databaseId,
-            collectionId,
-            articleID
-          );
-
-          // Increment or decrement likes based on action
-          const updatedLikes = isNowLiked
-            ? (doc.likes || 0) + 1 // like
-            : Math.max(0, (doc.likes || 0) - 1); // unlike (prevent negative)
-
-          // Update the document with required fields
-          await databases.updateDocument(databaseId, collectionId, articleID, {
-            likes: updatedLikes,
-            isEmailVerified: doc.isEmailVerified,
-          });
-
-          // Update displayed like count
-          $("#like-count").text(updatedLikes);
-        } catch (err) {
-          console.error("Failed to update likes:", err);
-          // Revert local storage on error
-          userLikes[articleID] = !isNowLiked;
-          localStorage.setItem("userLikes", JSON.stringify(userLikes));
+        // Set initial UI state
+        if (hasLiked) {
+          $("#like-button").addClass("is-active");
         }
+
+        $("#like-button").on("click", async function () {
+          if (!articleID) return;
+
+          // Toggle like status in localStorage
+          const userLikes = getUserLikes();
+          const isNowLiked = !userLikes[articleID];
+          userLikes[articleID] = isNowLiked;
+          localStorage.setItem("userLikes", JSON.stringify(userLikes));
+
+          // Toggle UI feedback
+          $(this).toggleClass("is-active");
+
+          try {
+            // Fetch current document
+            const doc = await databases.getDocument(
+              databaseId,
+              collectionId,
+              articleID
+            );
+
+            // Increment or decrement likes based on action
+            const updatedLikes = isNowLiked
+              ? (doc.likes || 0) + 1 // like
+              : Math.max(0, (doc.likes || 0) - 1); // unlike (prevent negative)
+
+            // Update the document with required fields
+            await databases.updateDocument(
+              databaseId,
+              collectionId,
+              articleID,
+              {
+                likes: updatedLikes,
+                isEmailVerified: doc.isEmailVerified,
+              }
+            );
+
+            // Update displayed like count
+            $("#like-count").text(updatedLikes);
+          } catch (err) {
+            console.error("Failed to update likes:", err);
+            // Revert local storage on error
+            userLikes[articleID] = !isNowLiked;
+            localStorage.setItem("userLikes", JSON.stringify(userLikes));
+          }
+        });
       });
-    });
 
-    const tags = (updatedArticle.researchFields || [])
-      .map((tag) => `<span class="tag">${tag}</span>`)
-      .join(" ");
+      const tags = (updatedArticle.researchFields || [])
+        .map((tag) => `<span class="tag">${tag}</span>`)
+        .join(" ");
 
-    const createdTime = timeAgo(updatedArticle.$createdAt);
+      const createdTime = timeAgo(updatedArticle.$createdAt);
 
-    authorDetails.innerHTML = `
+      authorDetails.innerHTML = `
     <div class="author-info">
       <i class="fas fa-user-circle fa-2x"></i>
       <span>${updatedArticle.firstName} ${updatedArticle.lastName}</span>
@@ -231,8 +247,8 @@ async function fetchArticle() {
       </div>
     
   `;
-    const style = document.createElement("style");
-    style.textContent = `
+      const style = document.createElement("style");
+      style.textContent = `
   .tooltip-badge {
     position: relative;
   }
@@ -272,36 +288,75 @@ async function fetchArticle() {
     opacity: 1;
   }
   `;
-    document.head.appendChild(style);
-    // Load comments after article is loaded
-    const commentPlaceholder = document.getElementById(
-      "comment-box-placeholder"
-    );
-    if (commentPlaceholder) {
-      fetch("/comment-box.html")
-        .then((res) => res.text())
-        .then((html) => {
-          commentPlaceholder.innerHTML = html;
+      document.head.appendChild(style);
+      // Load comments after article is loaded
+      const commentPlaceholder = document.getElementById(
+        "comment-box-placeholder"
+      );
+      if (commentPlaceholder) {
+        fetch("/comment-box.html")
+          .then((res) => res.text())
+          .then((html) => {
+            commentPlaceholder.innerHTML = html;
 
-          // Load comment script dynamically
-          const commentScript = document.createElement("script");
-          commentScript.src = "/assets/js/comment.js";
-          document.body.appendChild(commentScript);
-        })
-        .catch((err) => {
-          console.error("Failed to load comments:", err);
-        });
-    } else {
-      console.warn("Comment box placeholder not found");
+            // Load comment script dynamically
+            const commentScript = document.createElement("script");
+            commentScript.src = "/assets/js/comment.js";
+            document.body.appendChild(commentScript);
+          })
+          .catch((err) => {
+            console.error("Failed to load comments:", err);
+          });
+      } else {
+        console.warn("Comment box placeholder not found");
+      }
+    } catch (error) {
+      console.log("Article ID:", articleID);
+      console.error("Error fetching article:", error);
+      articleTitle.textContent = "Error: Article Not Found";
+      articleContent.textContent = "The requested article could not be found.";
     }
-  } catch (error) {
-    console.log("Article ID:", articleID);
-    console.error("Error fetching article:", error);
-    articleTitle.textContent = "Error: Article Not Found";
-    articleContent.textContent = "The requested article could not be found.";
   }
-}
 
-// Fetch the article on page load
-fetchArticle();
+  // New function to update banner based on verification status
+  function updateVerificationBanner(isVerified) {
+    // console.log("Verification status:", isVerified);
+    const bannerElement = document.getElementById("verification-banner");
+
+    if (!bannerElement) {
+      //console.error("Verification banner element not found!");
+      return; // Exit if banner element doesn't exist
+    }
+
+    if (isVerified) {
+      // Show verified banner
+      bannerElement.innerHTML = `
+      <div class="verification-success">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-text">
+          <strong>VERIFIED:</strong> THE FACTS AND INFORMATION IN THIS ARTICLE HAVE BEEN 
+          REVIEWED AND VERIFIED BY THE BEYOND SC!ENCE MAGAZINE EDITORIAL TEAM.
+        </div>
+      </div>
+    `;
+    } else {
+      // Show default warning banner (unverified)
+      bannerElement.innerHTML = `
+      <div class="verification-warning">
+        <div class="warning-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="warning-text">
+          <strong>DISCLAIMER:</strong> BEYOND SC!ENCE MAGAZINE HAS NOT VERIFIED THE FACTS OR 
+          CLAIMS IN THIS USER-CONTRIBUTED ARTICLE. Readers should exercise discretion.
+        </div>
+      </div>
+    `;
+    }
+  }
+
+  // Fetch the article on page load
+  fetchArticle();
 })();
