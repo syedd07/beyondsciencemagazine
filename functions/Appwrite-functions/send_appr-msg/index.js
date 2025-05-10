@@ -57,7 +57,7 @@ export default async ({ req, res, log }) => {
       <p>Thank you for sharing your story with us. We are excited to have you as part of the Beyond Science Magazine community!</p>
       <p>
         If you wish to request removal or want to edit your article (<strong>${$id}</strong>), please send a mail 
-        <a href="mailto:admin@beyondsciencemagazine.studio" style="color: #4CAF50;">here</a>.
+        <a href="mailto:syedyusufali6626@gmail.com" style="color: #4CAF50;">here</a>.
       </p>
       <br>
       <p>Best regards,</p>
@@ -66,7 +66,7 @@ export default async ({ req, res, log }) => {
     <footer style="text-align: center; margin-top: 20px; font-size: 12px; color: #777;">
       <p>© 2025 Beyond Science Magazine. All rights reserved.</p>
       <p>If you have any questions, feel free to contact us at 
-        <a href="mailto:admin@beyondsciencemagazine.studio" style="color: #4CAF50;">admin@beyondsciencemagazine.studio</a>.
+        <a href="mailto:syedyusufali6626@gmail.com" style="color: #4CAF50;">syedyusufali6626@gmail.com</a>.
       </p>
     </footer>
   </div>
