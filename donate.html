@@ -1,0 +1,457 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Support BEYOND SC!ENCE Magazine</title>
+    <meta
+      name="title"
+      content="Support BEYOND SC!ENCE Magazine - Help Us Remain Ad-Free"
+    />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Support BEYOND SC!ENCE Magazine by donating to help us remain ad-free and maintain our servers. Your contribution helps us continue delivering quality content about science and research."
+    />
+    <meta
+      name="keywords"
+      content="Beyond Science Magazine, Support, Donate, Ad-Free, Science, Research"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- Fav icons-->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="articles/images/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="articles/images/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="articles/images/favicon_io/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="articles/images/favicon_io/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="articles/images/favicon_io/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="articles/site.webmanifest" />
+
+    <!-- Custom styles for donation page -->
+    <style>
+      .location-selection {
+        text-align: center;
+        margin: 2em 0;
+      }
+      .location-btn {
+        margin: 0 1em;
+        padding: 0.5em 1.5em;
+      }
+      .donation-form {
+        display: none;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .thank-you-message {
+        display: none;
+        text-align: center;
+        margin: 2em 0;
+      }
+      .donation-options {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 2em 0;
+      }
+      .donation-amount {
+        flex: 1 0 150px;
+        margin: 0.5em;
+        padding: 1em;
+        text-align: center;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .donation-amount:hover,
+      .donation-amount.selected {
+        background-color: #3d84a8;
+        color: white;
+      }
+      #customAmount {
+        width: 100%;
+        margin-top: 1em;
+      }
+      .progress-bar {
+        background-color: #3d84a8;
+        height: 3px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        z-index: 1000;
+        transition: width 0.3s ease;
+      }
+    </style>
+
+    <!-- Appwrite SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+  </head>
+  <div class="progress-bar"></div>
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <!-- Header -->
+          <header id="header">
+            <a href="index.html" class="logo"
+              ><strong>BEYOND SC!ENCE Magazine</strong></a
+            >
+            <ul class="icons">
+              <li>
+                <a
+                  href="https://x.com/beyondscimag?t=cp2OZPmPyWUWNI1OQYh2tQ&s=09"
+                  class="icon brands fa-twitter"
+                  target="_blank"
+                  ><span class="label">Twitter</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/beyondsciencemagazine/"
+                  class="icon brands fa-instagram"
+                  target="_blank"
+                  ><span class="label">Instagram</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/company/beyond-science-magazine/"
+                  class="icon brands fa-linkedin"
+                  target="_blank"
+                  ><span class="label">LinkedIn</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://youtube.com/@beyondsciencemagazine?si=4m1E5WEC347F4aZE"
+                  class="icon brands fa-youtube"
+                  target="_blank"
+                  ><span class="label">YouTube</span></a
+                >
+              </li>
+            </ul>
+          </header>
+
+          <!-- Content -->
+          <section>
+            <header class="main">
+              <h1>Support BEYOND SC!ENCE Magazine</h1>
+            </header>
+
+            <div class="content">
+              <p>
+                <strong
+                  >Help us keep BEYOND SC!ENCE Magazine ad-free and
+                  independent!</strong
+                >
+                Your donation directly supports our server costs, content
+                creation, and enables us to continue featuring the stories of
+                researchers from around the world.
+              </p>
+
+              <p>
+                As an independent publication, we rely on the support of readers
+                like you. Every contribution, no matter the size, makes a
+                significant difference and helps us continue our mission of
+                bridging the gap between science and the public.
+              </p>
+
+              <!-- Location Selection -->
+              <div class="location-selection">
+                <h3>Where are you donating from?</h3>
+                <button id="india-btn" >
+                  India
+                </button>
+                <button id="international-btn" class="button location-btn">
+                  Outside India
+                </button>
+              </div>
+
+              <!-- Indian Donors Form -->
+              <div id="india-form" class="donation-form">
+                <h3>Donation Information (India)</h3>
+                <p>
+                  Click the button below to proceed directly to our secure
+                  payment gateway.
+                </p>
+                <h3>
+                    Enter the Donation amount and other details in payment page! 
+                </h3>
+                <div class="row gtr-uniform">
+                  <div
+                    class="col-12"
+                    style="margin-top: 2em; text-align: center"
+                  >
+                    <a
+                      href="https://pmny.in/uIPYdT5Ryse5"
+                      target="_blank"
+                      
+                      class="button primary large"
+                      >Donate Now</a
+                    >
+                  </div>
+                  <div class="col-12">
+                    <p
+                      class="small"
+                      style="
+                        text-align: center;
+                        margin-top: 1em;
+                        font-size: 0.9em;
+                      "
+                    >
+                      You will be redirected to our secure payment gateway.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- International Donors Form -->
+              <div id="international-form" class="donation-form">
+                <h3>Donation Information (International)</h3>
+                <p>
+                  Thank you for your interest in supporting BEYOND SC!ENCE
+                  Magazine! Currently, our direct payment system only supports
+                  donations from India.
+                </p>
+                <p>
+                  Please fill out the form below, and our team will contact you
+                  with alternative ways to contribute.
+                </p>
+
+                <form id="international-donation-form">
+                  <div class="row gtr-uniform">
+                    <div class="col-6 col-12-xsmall">
+                      <input
+                        type="text"
+                        name="name"
+                        id="intl-name"
+                        placeholder="Your Name"
+                        required
+                      />
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                      <input
+                        type="email"
+                        name="email"
+                        id="intl-email"
+                        placeholder="Your Email"
+                        required
+                      />
+                    </div>
+                    <div class="col-12">
+                      <input
+                        type="text"
+                        name="country"
+                        id="intl-country"
+                        placeholder="Your Country"
+                        required
+                      />
+                    </div>
+                    <div class="col-12">
+                      <select name="amount" id="intl-amount">
+                        <option value="">- Preferred Donation Amount -</option>
+                        <option value="10">$10</option>
+                        <option value="25">$25</option>
+                        <option value="50">$50</option>
+                        <option value="100">$100</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <textarea
+                        name="message"
+                        id="intl-message"
+                        placeholder="Message (optional)"
+                        rows="3"
+                      ></textarea>
+                    </div>
+                    <div class="col-12">
+                      <ul class="actions">
+                        <li>
+                          <button
+                            type="submit"
+                            id="intl-submit-btn"
+                            class="button primary"
+                          >
+                            Submit
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Thank You Message -->
+              <div id="thank-you" class="thank-you-message">
+                <h2>Thank You for Your Support!</h2>
+                <p>
+                  Your contribution helps us continue our mission of bringing
+                  science stories to the world.
+                </p>
+                <p>
+                  We have received your information and will be in touch soon.
+                </p>
+                <a href="index.html" class="button">Return to Homepage</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div id="sidebar">
+        <div class="inner">
+          <!-- Search -->
+          <section id="search" class="alt">
+            <form id="searchForm" method="post" action="#">
+              <input type="text" name="query" id="query" placeholder="Search" />
+              <br />
+              <button type="submit">Search</button>
+            </form>
+          </section>
+
+          <!-- Menu -->
+          <nav id="menu">
+            <header class="major">
+              <h2>Menu</h2>
+            </header>
+            <ul>
+              <li><a href="/">Homepage</a></li>
+              <li><a href="/articles/about.html">About</a></li>
+              <li><a href="/articles/article.html">Articles</a></li>
+              <li>
+                <a href="/user-uploads/articles/list.html">Articles by users</a>
+              </li>
+              <li>
+                <a href="/user-uploads/share-your-story/form.html"
+                  >Share your Story</a
+                >
+              </li>
+              <li><a href="/books.html">Books</a></li>
+              <li><a href="e-books.html">E-books</a></li>
+              <li><a href="articles/contact.html">Contact us</a></li>
+              <li><a href="/nl.html">Newsletter</a></li>
+              <li><a href="/current.html">Current issue</a></li>
+              <li><a href="/donate.html" class="active">Donate</a></li>
+              <li>
+                <span class="opener">other</span>
+                <ul>
+                  <li><a href="/articles/privacy.html">Privacy Policy</a></li>
+                  <li><a href="#">Multimedia</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Section -->
+          <section>
+            <header class="major">
+              <h2>Latest News</h2>
+            </header>
+            <div class="mini-posts">
+              <article>
+                <p>
+                  NIH researchers identify promising Lead for treating
+                  degenerative eye disorders.
+                </p>
+              </article>
+              <article>
+                <p>
+                  Chinese scientists create high-efficiency thermoelectric
+                  plastics.
+                </p>
+              </article>
+              <article>
+                <p>
+                  New study reveals how global warming's impact on rainfall
+                  patterns.
+                </p>
+              </article>
+            </div>
+            <ul class="actions">
+              <li>
+                <a href="articles/article.html" class="button"
+                  >Read Our Features</a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <!-- Section -->
+          <section>
+            <header class="major">
+              <h2>Get in touch</h2>
+            </header>
+            <p>
+              We'd love to hear from you! Whether you have questions,
+              suggestions, or want to collaborate, feel free to reach out.
+              Together, we can bridge the gap between science and the public.
+            </p>
+            <ul class="contact">
+              <li class="icon solid fa-envelope">
+                <a href="mailto:admin@beyondsciencemagazine.studio"
+                  >admin@beyondsciencemagazine.studio</a
+                >
+              </li>
+              <li class="icon solid fa-phone">(+91 7411666573)</li>
+              <li class="icon solid fa-home">
+                Whitefield Bengaluru <br />
+                Karnataka, 560067
+              </li>
+            </ul>
+          </section>
+
+          <!-- Footer -->
+          <footer id="footer">
+            <p class="copyright">
+              &copy; 2025. All rights reserved.
+              <a href="https://beyondsciencemagazine.studio">Beyond</a>. <br />
+              Design & Managed by:
+              <a href="https://sydali.me" target="_blank">Syed Ali</a>.
+            </p>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script src="donate.js"></script>
+  </body>
+</html>

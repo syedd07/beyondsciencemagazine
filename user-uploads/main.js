@@ -3,7 +3,7 @@ const BUCKET_ID = "67f1709500236aedbcce";
 
 const client = new Appwrite.Client();
 client
-  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setEndpoint("https://fra.cloud.appwrite.io/v1")
   .setProject("67efa9d90005502fbfa9");
 
 const databases = new Databases(client);

@@ -124,7 +124,7 @@ function renderArticles(articles) {
     articleCard.innerHTML = `
       <a href="/user-uploads/articles/view.html?articleID=${article.$id}" class="image">
       <div style="position: relative; width: 100%; height: 250px; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
-        <img src="${imageUrl}" alt="${article.title}">
+        <img src="${imageUrl}" alt="${article.title}" style= "object: fill">
       </div>
       </a>
       <h3>${article.articleTitle}</h3>
