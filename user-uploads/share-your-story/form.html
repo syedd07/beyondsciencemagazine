@@ -279,7 +279,7 @@
                             // Initialize Quill editor
                              var quill = new Quill('#editor', {
                                 theme: 'snow',
-                                placeholder: 'Write your story here or paste here... max words: 1500',
+                                placeholder: 'Write your story here or paste here... max words: 2500',
                                 modules: {
                                     toolbar: [
                                         [{ 'font': ['times-new-roman', 'serif', 'sans-serif'] }, { 'size': [] }],
@@ -309,9 +309,9 @@
                                 const html = quill.root.innerHTML; // Get HTML content
                                 const wordCount = text.length > 0 ? text.split(/\s+/).length : 0;
                                 const charCount = html.length;
-                                wordCountDiv.textContent = `Word Count: ${wordCount}/1500`;
+                                wordCountDiv.textContent = `Word Count: ${wordCount}/2500`;
 
-                                if (charCount > 15000) {
+                                if (charCount > 150000) {
 
                                     wordCountDiv.style.color = 'red';
                                 } else {

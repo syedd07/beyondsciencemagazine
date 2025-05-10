@@ -76,7 +76,10 @@ window.addEventListener("DOMContentLoaded", () => {
     const tags = Array.from(document.querySelectorAll("#tags-wrapper span"))
       .map((tag) => tag.textContent)
       .join(", ");
+    
+    // Apply normalization to the story content before displaying in preview
     const storyHTML = quill.root.innerHTML || "";
+    const normalizedStoryHTML = normalizeWhitespace(storyHTML);
 
     previewContent.innerHTML = `
       <div class="modal-drag-indicator"></div>
@@ -102,7 +105,7 @@ window.addEventListener("DOMContentLoaded", () => {
         <p><strong>Article Title:</strong> ${articleTitle}</p>
         <hr>
         <h3>Story:</h3>
-        <div class="modal-story-content">${storyHTML}</div>
+        <div class="modal-story-content">${normalizedStoryHTML}</div>
       </div>
     `;
 
@@ -171,6 +174,16 @@ otpBoxes.forEach((box, index) => {
     const val = box.value;
     if (val && index < otpBoxes.length - 1) {
       otpBoxes[index + 1].focus();
+    }
+    
+    // Auto-verify when all boxes are filled
+    if (index === otpBoxes.length - 1 && val) {
+      // Check if all previous boxes are filled
+      const allFilled = Array.from(otpBoxes).every(box => box.value.trim() !== '');
+      if (allFilled) {
+        // Trigger verification automatically
+        verifyOtpBtn.click();
+      }
     }
   });
 
@@ -307,7 +320,8 @@ verifyOtpBtn.addEventListener("click", async (e) => {
     return;
   }
 
-  messageDiv.textContent = "Verifying OTP...";
+  // Show spinner with verifying message
+  messageDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying OTP...';
   messageDiv.style.color = "black";
 
   try {
@@ -331,7 +345,7 @@ verifyOtpBtn.addEventListener("click", async (e) => {
   console.log("OTP Verify Result:", result);
 
   if (result.success === true || result.success === 'true') {
-      messageDiv.textContent = "Email verified! Continue with your form submission.";
+      messageDiv.innerHTML = '<i class="fas fa-check-circle"></i> Email verified! Continue with your form submission.';
       messageDiv.style.color = "green";
       notyf.success("Email verified! You can now submit your story.");
     
@@ -347,25 +361,32 @@ verifyOtpBtn.addEventListener("click", async (e) => {
       verifyOtpBtn.style.cursor = "not-allowed";
       verifyOtpBtn.style.backgroundColor = "#ccc"; // Optional: Change button color
 
+      // Disable email input field
+      const emailInput = document.getElementById("Email");
+      emailInput.disabled = true;
+      emailInput.style.cursor = "not-allowed";
+      emailInput.style.backgroundColor = "#f5f5f5";
+      
+      // Disable the Verify Email button
+      const verifyEmailBtn = document.getElementById("verifyEmailBtn");
+      verifyEmailBtn.style.pointerEvents = "none";
+      verifyEmailBtn.style.color = "#ccc";
+      verifyEmailBtn.style.cursor = "not-allowed";
+
       isOtpVerified = true; // Set OTP verification flag to true
 
     } else {
-      messageDiv.textContent = result.message || "Incorrect OTP.";
+      messageDiv.innerHTML = '<i class="fas fa-times-circle"></i> ' + (result.message || "Incorrect OTP.");
       messageDiv.style.color = "red";
       notyf.error(result.message || "Incorrect OTP. Please try again.");
 
     }
   } catch (err) {
-    messageDiv.textContent = "Error: " + err.message;
+    messageDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error: ' + err.message;
     messageDiv.style.color = "red";
     notyf.error(err.message || "An error occurred while verifying OTP.");
   }
 });
-
-
-
-
-
 
 // Prevent form submission if OTP is not verified and other required fields are not filled
 finalSubmit.addEventListener("click", async (e) => {
@@ -380,11 +401,17 @@ finalSubmit.addEventListener("click", async (e) => {
     return;
   }
 
-  // Check if the story content is too long
+  // Clean up the story content - normalize paragraph spacing
   const storyHTML = document.querySelector("#editor .ql-editor").innerHTML;
-  if (storyHTML.length > 150000) {    
+  const cleanedStoryHTML = normalizeWhitespace(storyHTML);
+  
+  // Update the hidden input with the cleaned content
+  document.getElementById("StoryContent").value = cleanedStoryHTML;
+
+  // Check if the story content is too long
+  if (cleanedStoryHTML.length > 150000) {    
     notyf.error(
-      "Your story is too long. Please shorten it to fit within 1500 characters."
+      "Your story is too long. Please shorten it to fit within 2500 characters."
     );
     return;
   }
@@ -427,7 +454,7 @@ finalSubmit.addEventListener("click", async (e) => {
       document.querySelectorAll("#tags-wrapper span")
     ).map((tag) => tag.textContent),
     image_id: profilePicId,
-    story: document.getElementById("StoryContent").value,
+    story: cleanedStoryHTML, // Use the cleaned content here
     articleTitle: document.getElementById("Title").value,
   };
 
@@ -450,4 +477,50 @@ finalSubmit.addEventListener("click", async (e) => {
   }
 });
 
-
+/**
+ * Normalizes whitespace in HTML content by replacing multiple consecutive
+ * paragraph breaks with a single break
+ */
+function normalizeWhitespace(htmlContent) {
+  if (!htmlContent) return '';
+  
+  // First pass: normalize basic patterns
+  let normalizedContent = htmlContent
+    // Replace multiple consecutive empty paragraphs with a single break
+    .replace(/(<p><br><\/p>|<p>\s*<\/p>|<p><\/p>|<p>\&nbsp;<\/p>){2,}/g, '<p><br></p>')
+    // Handle paragraphs with only non-breaking spaces
+    .replace(/<p>\&nbsp;\&nbsp;\&nbsp;\&nbsp;<\/p>/g, '<p><br></p>');
+  
+  // Second pass: handle headings and formatting more effectively
+  normalizedContent = normalizedContent
+    // Fix the space after headings - correctly capture the heading level and content
+    .replace(/<h([1-6])>(.*?)<\/h\1><p><br><\/p>/g, '<h$1>$2</h$1>')
+    
+    // Fix breaks around emphasized text
+    .replace(/<p><br><\/p><p><em>(.*?)<\/em><\/p><p><br><\/p>/g, '<p><em>$1</em></p>')
+    
+    // Handle standalone emphasized paragraph that acts as a heading
+    .replace(/<p><em>(.*?)<\/em><\/p><p><br><\/p>/g, '<p><em>$1</em></p>')
+    
+    // Fix excessive breaks between paragraphs
+    .replace(/<\/p><p><br><\/p><p><br><\/p><p>/g, '</p><p><br></p><p>')
+    
+    // Clean up extra breaks after headings (fix capturing group)
+    .replace(/<\/h([1-6])><p><br><\/p>/g, '</h$1>');
+  
+  // Third pass: handle emphasized headings and other specific patterns
+  normalizedContent = normalizedContent
+    // Clean up the <p><em>What's Next?</em></p><p><br></p> pattern
+    .replace(/<p><em>([^<]+)<\/em><\/p><p><br><\/p>/g, '<p><strong><em>$1</em></strong></p>')
+    
+    // Fix excessive breaks before headings (fix capturing group)
+    .replace(/<\/p>(<p><br><\/p>){2,}<h([1-6])/g, '</p><p><br></p><h$2')
+    
+    // Fix excessive breaks after paragraph end and before a new paragraph start
+    .replace(/<\/p>(<p><br><\/p>){2,}<p>/g, '</p><p><br></p><p>')
+    
+    // Clean up any remaining double breaks
+    .replace(/<p><br><\/p><p><br><\/p>/g, '<p><br></p>');
+  
+  return normalizedContent;
+}
